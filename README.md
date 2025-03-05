@@ -4,7 +4,7 @@ IRI Connect is an open-source framework for API standardization across the annui
 
 ## Style Guides
 
-OpenAPI definitions can be found on [SwaggerHub](https://app.swaggerhub.com/apis/curtislawhorn/IRI-APIs/1.0.0).
+OpenAPI definitions will likely be posted [SwaggerHub](https://www.swaggerhub.com).
 
 Specifications can be downloaded directly from the [repository](/Specifications).
 
