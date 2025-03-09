@@ -7,9 +7,8 @@ The style guide provides rules, regulations, and recommendations for Digital-Fir
 Individual firms decide the versions they will support.
 The [IRI registry](#) encompasses which firms support which APIs and what versions those consiste of. Firms can support multiple versions if they choose, and parties are free to add custom fields and data to existing definitions at their own risk.
 
-### Type
-The [type of versioning](https://www.postman.com/api-platform/api-versioning/) is currently under review with the technical committee:
-- URL
+- Type: The [type of versioning](https://www.postman.com/api-platform/api-versioning/) is currently under review with the technical committee:
+- - URL
 - Query parameter
 - Header
 - Consumer-based
