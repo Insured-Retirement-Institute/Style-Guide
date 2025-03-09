@@ -30,4 +30,4 @@ Security issues and bugs should be reported directly to Katherine Dease kdease@i
 
 ## Code of conduct
 
-IRI adopts [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) code of conduct open-source standards. 
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)]([code_of_conduct.md](https://github.com/Insured-Retirement-Institute/Style-Guide/blob/main/CODE_OF_CONDUCT.md))
