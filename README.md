@@ -33,3 +33,7 @@ Security issues and bugs should be reported directly to Katherine Dease kdease@i
 ## Code of conduct
 
 See [code of conduct](https://github.com/Insured-Retirement-Institute/Style-Guide/blob/main/CODE_OF_CONDUCT.md)
+
+## Technical committee meeting notes
+
+[See notes](https://github.com/Insured-Retirement-Institute/Style-Guide/tree/main/Technical%20Committee%20Meeting%20Notes)
