@@ -9,14 +9,10 @@ Coming soon
 ## Versioning
 
 Individual firms decide the versions they will support.
-The [IRI registry](#) encompasses which firms support which APIs and what versions those consiste of. Firms can support multiple versions if they choose, and parties are free to add custom fields and data to existing definitions at their own risk.
+The [IRI registry](#) encompasses which firms support which APIs and what versions those consiste of. Firms can support multiple versions if they choose, and parties are free to add custom fields, headers, and data to existing definitions at their own risk.
 
-- Type: The [type of versioning](https://www.postman.com/api-platform/api-versioning/) is currently under review with the technical committee:
-  - URL
-  - Query parameter
-  - Header
-  - Consumer-based
-- Release changes: [Semantic Versioning (SemVer)](https://semver.org/) is instituted for the versioning scheme to conveys the meaning about the changes in a release. To summarize, given a version number MAJOR.MINOR.PATCH, increment the:
+- APIs will utilize versioning at the URL level. In this method, the API endpoint URL includes the major version number. For example, users wanting to retrieve all products from a database would send a request to https://example-api.com/v1/products. The specific version of an API can be specified as an optional header as outlined above.
+- Release changes will institute [Semantic Versioning (SemVer)](https://semver.org/) for the versioning scheme to conveys the meaning about the changes in a release. To summarize, given a version number MAJOR.MINOR.PATCH, increment the:
   - MAJOR version when you make incompatible API changes (ex: breaking change, addition of required field or deprecation of an existing field)
   - MINOR version when you add functionality in a backward compatible manner (ex: addition of optional fields or possible values)
   - PATCH version when you make backward compatible bug fixes
