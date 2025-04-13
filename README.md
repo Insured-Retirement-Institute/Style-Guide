@@ -1,6 +1,6 @@
 # Style Guide
 
-The style guide provides rules, regulations, and recommendations for Digital-First standards.
+The style guide provides rules, regulations, and recommendations for Digital-First standards. We are currently in the process of standing up a [GitHub Pages](https://insured-retirement-institute.github.io/Style-Guide/) to host OpenAPI definitions...THIS IS CURRENTLY A WORK IN PROGRESS AND IS NOT AN OFFICIAL PUBLICATION...check back often for updates.
 
 ## Data definitions
 
