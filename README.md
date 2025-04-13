@@ -2,7 +2,17 @@
 
 The style guide provides rules, regulations, and recommendations for Digital-First standards. We are currently in the process of standing up a [GitHub Pages](https://insured-retirement-institute.github.io/Style-Guide/) to host OpenAPI definitions...THIS IS CURRENTLY A WORK IN PROGRESS AND IS NOT AN OFFICIAL PUBLICATION...check back often for updates.
 
+## Style Conventions
+
+Field naming
+- Booleans: Should be prefixed with is or has.
+- Lists/Arrays: Use plural nouns to represent the array itself and singular nouns to represent the elements within the array
+Agents
+Producers > agents
+
 ## Data definitions
+
+- Producers is the preferred nomenclature when referring to licensed/appointed professionals selling products.
 
 Coming soon
 
