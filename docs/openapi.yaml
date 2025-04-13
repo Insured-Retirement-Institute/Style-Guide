@@ -1,0 +1,767 @@
+openapi: 3.0.3
+info:
+  title: Producer Readiness APIs
+  version: 1.0.0
+paths:
+  /producer/transactions:
+    get:
+      summary: Get producer transactions
+      parameters:
+        - name: npn
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The NPN of the producer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        transactionName:
+                          type: string
+                          example: "Surrender"
+                        requestDate:
+                          type: string
+                          format: date
+                          example: "2025-02-13"
+                        carrierName:
+                          type: string
+                          example: "Eduardo Jones"
+                        contractNumber:
+                          type: string
+                          example: "555888800A"
+                        transactionStatus:
+                          type: string
+                          example: "Pending"
+    post:
+      summary: Create a producer transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "1234567890"
+                transactionId:
+                  type: string
+                  example: "1234567890"
+                transactionName:
+                  type: string
+                  example: "Surrender"
+                requestDate:
+                  type: string
+                  format: date
+                  example: "2025-02-13"
+                carrierName:
+                  type: string
+                  example: "Eduardo Jones"
+                contractNumber:
+                  type: string
+                  example: "555888800A"
+                transactionStatus:
+                  type: string
+                  example: "Pending"
+      responses:
+        '200':
+          description: Successful response
+  /producer/events:
+    get:
+      summary: Get producer events
+      parameters:
+        - name: npn
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The NPN of the producer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        eventName:
+                          type: string
+                          example: "Upcoming Anniversary Renewal"
+                        eventDate:
+                          type: string
+                          format: date
+                          example: "2025-02-13"
+                        carrierName:
+                          type: string
+                          example: "Eduardo Jones"
+                        contractNumber:
+                          type: string
+                          example: "555888800A"
+                        description:
+                          type: string
+                          example: "Allocation update requests need submitted prior to March 6, 2025"
+    post:
+      summary: Add a producer event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "1234567890"
+                carrier:
+                  type: string
+                  example: "585858585"
+                eventId:
+                  type: string
+                  example: "event123"
+                eventName:
+                  type: string
+                  example: "Upcoming Anniversary Renewal"
+                eventDate:
+                  type: string
+                  format: date
+                  example: "2025-02-13"
+                carrierName:
+                  type: string
+                  example: "Eduardo Jones"
+                contractNumber:
+                  type: string
+                  example: "555888800A"
+                description:
+                  type: string
+                  example: "Allocation update requests need submitted prior to March 6, 2025"
+      responses:
+        '200':
+          description: Successful response
+  /carrier/product:
+    post:
+      summary: Add a carrier product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                carrier:
+                  type: string
+                  example: "909090909"
+                CUSIP:
+                  type: string
+                  example: "1234567890"
+                name:
+                  type: string
+                  example: "Carrier Product Name ABC"
+                type:
+                  type: string
+                  example: "Fixed Annuity"
+      responses:
+        '200':
+          description: Successful response
+  /producer/product:
+    post:
+      summary: Add a producer product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "1234567890"
+                carrier:
+                  type: string
+                  example: "909090909"
+                CUSIP:
+                  type: string
+                  example: "1234567890"
+                carrierAuthorization:
+                  type: boolean
+                  example: true
+                distributorAuthorization:
+                  type: boolean
+                  example: true
+                jurisdictions:
+                  type: array
+                  items:
+                    type: string
+                  example: ["CT", "MA"]
+      responses:
+        '200':
+          description: Successful response
+  /distributor/product:
+    post:
+      summary: Add a distributor product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "1234567890"
+                distributor:
+                  type: string
+                  example: "Wells Bismarck"
+                CUSIP:
+                  type: string
+                  example: "1234567890"
+                distributorAuthorization:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Successful response
+  /distributor/producer:
+    post:
+      summary: Add a distributor producer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "1234567890"
+                producerCRD:
+                  type: string
+                  example: "1234567890"
+                producerAgentCode:
+                  type: string
+                  example: "1234567890"
+                producerFirstName:
+                  type: string
+                  example: "John"
+                distributor:
+                  type: string
+                  example: "Wells Bismarck"
+                producerLastName:
+                  type: string
+                  example: "Doe"
+                producerEmailAddress:
+                  type: string
+                  example: "jdoe@gmail.com"
+      responses:
+        '200':
+          description: Successful response
+  /producer/license:
+    post:
+      summary: Add a producer license
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "1234567890"
+                jurisdiction:
+                  type: string
+                  example: "CT"
+                number:
+                  type: string
+                  example: "72adsfG99"
+                status:
+                  type: string
+                  example: "Active"
+                licenseDate:
+                  type: string
+                  format: date
+                  example: "2025-02-12"
+                expirationDate:
+                  type: string
+                  format: date
+                  example: "2026-02-12"
+                resident:
+                  type: boolean
+                  example: true
+                lineOfAuthority:
+                  type: string
+                  example: "Annuity"
+                licenseType:
+                  type: string
+                  example: "Producer"
+      responses:
+        '200':
+          description: Successful response
+  /producer/registrations:
+    post:
+      summary: Add a producer registration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "1234567890"
+                status:
+                  type: string
+                  example: "In Good Standing"
+                crdNumber:
+                  type: string
+                  example: "1234567890"
+                type:
+                  type: string
+                  example: "Series 6"
+                firmName:
+                  type: string
+                  example: "Advisor A"
+                firmCRDNumber:
+                  type: string
+                  example: "1234567890"
+      responses:
+        '200':
+          description: Successful response
+  /carrier:
+    post:
+      summary: Add a carrier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                carrier:
+                  type: string
+                  example: "909090909"
+                assets:
+                  type: object
+                  properties:
+                    logo_url:
+                      type: string
+                      example: "https://www.abcinc.com/logo.png"
+                    carrierDisplayName:
+                      type: string
+                      example: "ABC Inc"
+      responses:
+        '200':
+          description: Successful response
+  /producer/courses:
+    post:
+      summary: Add a producer course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  example: "RGED"
+                npn:
+                  type: string
+                  example: "1234567890"
+                carrier:
+                  type: string
+                  example: "909090909"
+                CUSIP:
+                  type: string
+                  example: "1234567890"
+                providerId:
+                  type: string
+                  example: "ABC Inc"
+                courseURL:
+                  type: string
+                  example: "https://www.reged.com/courses/132566"
+                completionStage:
+                  type: string
+                  example: "New"
+                courseId:
+                  type: string
+                  example: "132566"
+                courseName:
+                  type: string
+                  example: "Carrier A Version 5 Producer Training"
+                courseMethod:
+                  type: string
+                  example: "Online"
+                courseType:
+                  type: string
+                  example: "Product"
+                productTrainingType:
+                  type: string
+                  example: "Fixed Deferred Annuity"
+                status:
+                  type: string
+                  example: "Not Started"
+                completionInformation:
+                  type: object
+                  properties:
+                    certificationDate:
+                      type: string
+                      format: date
+                      example: "2025-02-10"
+                    credentialHours:
+                      type: integer
+                      example: 25
+                    certificationNumber:
+                      type: string
+                      example: "34652643"
+                    continuingEducationHours:
+                      type: integer
+                      example: 10
+                    completionDate:
+                      type: string
+                      format: date
+                      example: "2025-02-10"
+                    certificationState:
+                      type: string
+                      example: "CT"
+                    expirationDate:
+                      type: string
+                      format: date
+                      example: "2026-02-09"
+      responses:
+        '200':
+          description: Successful response
+  /producer/appointment:
+    post:
+      summary: Add a producer appointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "1234567890"
+                carrier:
+                  type: string
+                  example: "585858585"
+                status:
+                  type: string
+                  example: "In Progress"
+                lineOfAuthority:
+                  type: string
+                  example: "Annuity"
+                appointmentDate:
+                  type: string
+                  format: date
+                  example: "2025-02-12"
+                appointmentState:
+                  type: string
+                  example: "MA"
+      responses:
+        '200':
+          description: Successful response
+  /producer/assistant:
+    post:
+      summary: API for interacting with AI assistant
+      description: Endpoint to interact with AI assistant for producer information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userPrompt:
+                  type: string
+                  example: "What is the status of my appointment?"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    example: "Your appointment is currently being processed and is expected to be completed by next week."
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /appointment:
+    post:
+      summary: Create an appointment
+      description: Endpoint to create an appointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npn:
+                  type: string
+                  example: "888777666A"
+                participantId:
+                  type: string
+                  example: "ABC Inc"
+                jurisdiction:
+                  type: string
+                  example: "CT"
+                status:
+                  type: string
+                  example: "Accepted"
+                type:
+                  type: string
+                  example: "Annuity"
+                appointmentDate:
+                  type: string
+                  format: date
+                  example: "2025-02-12"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Appointment successfully created"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /producer/detail:
+    get:
+      summary: Get producer information
+      description: Endpoint to get producer information
+      parameters:
+        - name: npn
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "888777666A"
+        - name: crd
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "1234567890"
+        - name: producer_code
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "ABCD1234"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  carrier:
+                    type: string
+                    example: "ABC Inc"
+                  producerNPN:
+                    type: string
+                    example: "888777666A"
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: "Carrier Product Name ABC"
+                        type:
+                          type: string
+                          example: "Fixed Annuity"
+                        CUSIP:
+                          type: string
+                          example: "283479577"
+                        jurisdictions:
+                          type: array
+                          items:
+                            type: string
+                          example: ["CT", "MA"]
+                        carrierAuthorization:
+                          type: boolean
+                          example: true
+                        distributorAuthorization:
+                          type: boolean
+                          example: true
+                        registrations:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              status:
+                                type: string
+                                example: "In Good Standing"
+                              crdNumber:
+                                type: string
+                                example: "1234567890"
+                              type:
+                                type: string
+                                example: "Series 6"
+                              firmName:
+                                type: string
+                                example: "Advisor A"
+                              firmCRDNumber:
+                                type: string
+                                example: "1234567890"
+                        stateLicenses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              jurisdiction:
+                                type: string
+                                example: "CT"
+                              number:
+                                type: string
+                                example: "72adsfG99"
+                              status:
+                                type: string
+                                example: "Active"
+                              licenseDate:
+                                type: string
+                                format: date
+                                example: "2025-02-12"
+                              expirationDate:
+                                type: string
+                                format: date
+                                example: "2026-02-12"
+                              resident:
+                                type: boolean
+                                example: true
+                              lineOfAuthority:
+                                type: string
+                                example: "Annuity"
+                              licenseType:
+                                type: string
+                                example: "Producer"
+                        courses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              provider:
+                                type: string
+                                example: "RGED"
+                              providerId:
+                                type: string
+                                example: "ABC Inc"
+                              completionStage:
+                                type: string
+                                example: "New"
+                              courseId:
+                                type: string
+                                example: "132566"
+                              courseName:
+                                type: string
+                                example: "Carrier A Version 5 Producer Training"
+                              courseMethod:
+                                type: string
+                                example: "Online"
+                              courseType:
+                                type: string
+                                example: "Product"
+                              productTrainingType:
+                                type: string
+                                example: "Fixed Deferred Annuity"
+                              completionInformation:
+                                type: object
+                                properties:
+                                  certificationDate:
+                                    type: string
+                                    format: date
+                                    example: "2025-02-10"
+                                  credentialHours:
+                                    type: integer
+                                    example: 25
+                                  certificationNumber:
+                                    type: string
+                                    example: "34652643"
+                                  continuingEducationHours:
+                                    type: integer
+                                    example: 10
+                                  completionDate:
+                                    type: string
+                                    format: date
+                                    example: "2025-02-10"
+                                  certificationState:
+                                    type: string
+                                    example: "CT"
+                                  expirationDate:
+                                    type: string
+                                    format: date
+                                    example: "2026-02-09"
+                        appointments:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              status:
+                                type: string
+                                example: "Accepted"
+                              lineOfAuthority:
+                                type: string
+                                example: "Annuity"
+                              appointmentDate:
+                                type: string
+                                format: date
+                                example: "2025-02-12"
+                              appointmentState:
+                                type: string
+                                example: "CT"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  responses:
+    success:
+      description: Successful
+    badRequestProblemDetails:
+      description: Bad Request
+    unauthorized:
+      description: Unauthorized
+    forbidden:
+      description: Forbidden

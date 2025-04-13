@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IRI API Documentation</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui.css" />
+  <link rel="stylesheet" type="text/css" href="./css/custom.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+</head>
+<body class="api-viewer-page">
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">
+        <a href="index.html">
+          <h1>IRI</h1>
+        </a>
+      </div>
+      <nav class="api-selector-nav">
+        <div class="selector-group">
+          <label for="api-selector">API:</label>
+          <select id="api-selector" onchange="loadSelectedAPI()">
+            <option value="openapi.yaml">Producer Readiness API</option>
+            <!-- Add more options as you add more APIs -->
+            <!-- <option value="another-api/openapi.yaml">Another API</option> -->
+          </select>
+        </div>
+        <div class="selector-group">
+          <label for="version-selector">Version:</label>
+          <select id="version-selector" class="version-selector" onchange="loadSelectedAPI()">
+            <!-- Versions will be populated dynamically if available -->
+            <option value="v1">v1.0.0</option>
+          </select>
+        </div>
+        <a href="index.html" class="btn btn-secondary">Back to API Catalog</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="swagger-ui"></div>
+
+  <!-- Swagger UI Bundle -->
+  <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js" charset="UTF-8"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-standalone-preset.js" charset="UTF-8"></script>
+  <script>
+    // Define available APIs and their versions
+    const apiDefinitions = {
+      "openapi.yaml": {
+        name: "Producer Readiness API",
+        versions: {
+          "v1": {
+            path: "openapi.yaml",
+            displayName: "v1.0.0"
+          }
+          // Add more versions as needed
+          // "v2": { path: "v2/openapi.yaml", displayName: "v2.0.0" }
+        }
+      }
+      // Add more APIs as needed
+      // "another-api/openapi.yaml": {
+      //   name: "Another API",
+      //   versions: {
+      //     "v1": { path: "another-api/openapi.yaml", displayName: "v1.0.0" }
+      //   }
+      // }
+    };
+
+    function populateVersionSelector(apiKey) {
+      const versionSelector = document.getElementById('version-selector');
+      versionSelector.innerHTML = '';
+
+      const api = apiDefinitions[apiKey];
+      if (api && api.versions) {
+        const versions = api.versions;
+        Object.keys(versions).forEach(versionKey => {
+          const option = document.createElement('option');
+          option.value = versionKey;
+          option.textContent = versions[versionKey].displayName;
+          versionSelector.appendChild(option);
+        });
+        const versionSelectorGroup = versionSelector.closest('.selector-group');
+        versionSelectorGroup.style.display = Object.keys(versions).length > 1 ? 'flex' : 'none';
+      }
+    }
+
+    function loadSelectedAPI() {
+      const apiSelector = document.getElementById('api-selector');
+      const versionSelector = document.getElementById('version-selector');
+      const selectedAPI = apiSelector.value;
+      const selectedVersion = versionSelector.value;
+
+      const apiPath = apiDefinitions[selectedAPI]?.versions[selectedVersion]?.path || selectedAPI;
+
+      // Update URL for bookmarking/sharing
+      const url = new URL(window.location);
+      url.searchParams.set('api', selectedAPI);
+      url.searchParams.set('version', selectedVersion);
+      window.history.pushState({}, '', url);
+
+      window.ui = SwaggerUIBundle({
+        url: apiPath,
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout",
+        displayRequestDuration: true,
+        defaultModelsExpandDepth: -1,
+        filter: true
+      });
+    }
+
+    // Initial setup
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const apiParam = urlParams.get('api');
+      const versionParam = urlParams.get('version');
+
+      const apiSelector = document.getElementById('api-selector');
+
+      // If API is specified in URL and exists in our definitions
+      if (apiParam && apiDefinitions[apiParam]) {
+        apiSelector.value = apiParam;
+      }
+
+      const selectedAPI = apiSelector.value;
+      populateVersionSelector(selectedAPI);
+
+      const versionSelector = document.getElementById('version-selector');
+
+      // If version is specified in URL and exists for the selected API
+      if (versionParam && apiDefinitions[selectedAPI]?.versions[versionParam]) {
+        versionSelector.value = versionParam;
+      }
+
+      loadSelectedAPI();
+    };
+  </script>
+</body>
+</html>

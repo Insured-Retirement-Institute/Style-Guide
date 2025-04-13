@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRI API Documentation Portal</title>
+  <link rel="stylesheet" href="./css/custom.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#" class="active">API Documentation</a></li>
+          <li><a href="https://github.com/Insured-Retirement-Institute/Style-Guide" target="_blank">GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>API Documentation</h1>
+      <p>Explore Approved APIs</p>
+    </div>
+  </section>
+
+  <section class="api-directory">
+    <div class="container">
+      <h2>Available APIs</h2>
+
+      <div class="api-grid">
+        <!-- Producer Readiness API Card -->
+        <div class="api-card">
+          <div class="api-card-header">
+            <h3>Producer Readiness API</h3>
+            <span class="api-version">Latest: v1.0.0</span>
+          </div>
+          <p>Series of APIs used for updating or obtaining producer data.</p>
+          <div class="api-versions-container">
+            <div class="api-versions">
+              <span>Available versions:</span>
+              <ul>
+                <li><a href="api-viewer.html?api=openapi.yaml&version=v1">v1.0.0</a></li>
+                <!-- Add more versions when available -->
+                <!-- <li><a href="api-viewer.html?api=openapi.yaml&version=v2">v2.0.0</a></li> -->
+              </ul>
+            </div>
+          </div>
+          <a href="api-viewer.html?api=openapi.yaml" class="btn btn-primary">View Documentation</a>
+        </div>
+
+        <!-- Template for additional APIs -->
+        <!--
+        <div class="api-card">
+          <div class="api-card-header">
+            <h3>Another API</h3>
+            <span class="api-version">Latest: v2.1.0</span>
+          </div>
+          <p>Brief description of what this API does and its primary use cases.</p>
+          <div class="api-versions-container">
+            <div class="api-versions">
+              <span>Available versions:</span>
+              <ul>
+                <li><a href="api-viewer.html?api=another-api/openapi.yaml&version=v1">v1.0.0</a></li>
+                <li><a href="api-viewer.html?api=another-api/v2/openapi.yaml&version=v2">v2.1.0</a></li>
+              </ul>
+            </div>
+          </div>
+          <a href="api-viewer.html?api=another-api/v2/openapi.yaml" class="btn btn-primary">View Documentation</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </section>
+
+  <section class="getting-started">
+    <div class="container">
+      <h2>Getting Started</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Choose an API</h3>
+          <p>Select the API that fits your integration needs from our catalog above.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Explore Documentation</h3>
+          <p>Review endpoints, parameters, and response schemas in our interactive documentation.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Test Requests</h3>
+          <p>Try out API requests directly from the documentation interface.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Implement</h3>
+          <p>Integrate the API into your application using our examples and guides.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">API Status</a></li>
+            <li><a href="#">Change Log</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Optional JavaScript for additional interactivity
+    document.addEventListener('DOMContentLoaded', function() {
+      // You could add animations or other interactive elements here
+    });
+  </script>
+</body>
+</html>
