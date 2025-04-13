@@ -10,7 +10,7 @@ Field naming
 
 ## Data definitions
 
-- **Producers** is the preferred nomenclature when referring to licensed/appointed professionals selling products.
+- **_Producers_** is the preferred nomenclature when referring to licensed/appointed professionals selling products.
 
 Coming soon
 
