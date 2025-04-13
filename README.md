@@ -6,7 +6,7 @@ The style guide provides rules, regulations, and recommendations for Digital-Fir
 
 Field naming
 - **Booleans**: Should be prefixed with is or has.
-- **Lists/Arrays**: Use plural nouns to represent the array itself and singular nouns to represent the elements within the array
+- **Lists/Arrays**: Use plural nouns to represent the array itself and singular nouns to represent the elements within the array.
 
 ## Data definitions
 
