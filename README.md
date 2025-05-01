@@ -10,7 +10,8 @@ Field naming
 
 ## Data definitions
 
-- **_Producers_** is the preferred nomenclature when referring to licensed/appointed professionals selling products.
+- **_Producer_** is the preferred nomenclature when referring to licensed/appointed professional or firm selling products.
+- **_Party_** is the term used to describe a party to the contract (that is not a producer) and may be an individual or another legal entity.
 
 Coming soon
 
