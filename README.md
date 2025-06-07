@@ -27,7 +27,7 @@ Data definitions
   - **_taxId_**
   - **_npn_**
   - **_crdNumber_**
-  - **_name_** (for businesses/entities)
+  - **_name_** (for business/entity)
 
 ## Versioning
 
