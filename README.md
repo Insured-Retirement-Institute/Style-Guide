@@ -17,7 +17,7 @@ Query String Parameters
 - **_associatedFirmId_**: Optional query parameter for the associated firm ID
 
 Data definitions
-- **_policyNumber_** is the term used to describe the insurance product being purchased.
+- **_policyNumber_** is the term used to describe the unique identifier of hte policy.
 - **_producer_** is the preferred nomenclature when referring to licensed/appointed professional or firm selling products.
 - **_party_** is the term used to describe a party to the policy (that is not a producer) and may be an individual or another legal entity.
 - Describing individuals and entities
