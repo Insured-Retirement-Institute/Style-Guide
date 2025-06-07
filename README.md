@@ -20,7 +20,7 @@ Data definitions
 - **_policyNumber_** is the term used to describe the insurance product being purchased.
 - **_producer_** is the preferred nomenclature when referring to licensed/appointed professional or firm selling products.
 - **_party_** is the term used to describe a party to the policy (that is not a producer) and may be an individual or another legal entity.
-- Individuals and entities
+- Describing individuals and entities
   - **_firstName_**
   - **_middleName_**
   - **_lastName_**
