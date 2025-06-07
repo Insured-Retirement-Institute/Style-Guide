@@ -8,12 +8,26 @@ Field naming
 - **Booleans**: Should be prefixed with is or has.
 - **Lists/Arrays**: Use plural nouns to represent the array itself and singular nouns to represent the elements within the array.
 
-## Data definitions
+Custom headers
+- **_correlationId_**: Optional custom header to be returned to the caller in response payload
+- **_senderParticipantId_**: Optional custom header identifying the sender of the call
+- **_receiverParticipantId_**: Optional custom header identifying the receiver of the call
 
-- **_Producer_** is the preferred nomenclature when referring to licensed/appointed professional or firm selling products.
-- **_Party_** is the term used to describe a party to the contract (that is not a producer) and may be an individual or another legal entity.
+Query String Parameters
+- **_associatedFirmId_**: Optional query parameter for the associated firm ID
 
-Coming soon
+Data definitions
+- **_policyNumber_** is the term used to describe the insurance product being purchased.
+- **_producer_** is the preferred nomenclature when referring to licensed/appointed professional or firm selling products.
+- **_party_** is the term used to describe a party to the policy (that is not a producer) and may be an individual or another legal entity.
+- Individuals and entities
+  - **_firstName_**
+  - **_middleName_**
+  - **_lastName_**
+  - **_taxId_**
+  - **_npn_**
+  - **_crdNumber_**
+  - **_name_** (for businesses/entities)
 
 ## Versioning
 
