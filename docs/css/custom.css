@@ -113,7 +113,7 @@
 
   /* Header Styles */
   .site-header {
-    background-color: white;
+    background-color: lightgray;
     border-bottom: 1px solid var(--border-color);
     padding: 1rem 0;
     position: sticky;
@@ -191,6 +191,7 @@
   /* API Directory */
   .api-directory {
     padding: 4rem 0;
+    background-color: lightgray;
   }
 
   .api-directory h2 {
@@ -205,18 +206,21 @@
   }
 
   .api-card {
-    background-color: var(--card-background);
+    background-color: lightblue;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     transition: var(--transition);
+    border: 1px solid var(--border-color); /* Add this line for the border */
   }
 
+  /* Optional: You can change the border color on hover for a nice effect */
   .api-card:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color); /* Change border color on hover */
   }
 
   .api-card-header {

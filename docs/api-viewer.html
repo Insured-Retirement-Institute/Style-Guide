@@ -14,16 +14,11 @@
 <body class="api-viewer-page">
   <header class="site-header">
     <div class="container">
-      <div class="logo">
-        <a href="index.html">
-          <h1>IRI</h1>
-        </a>
-      </div>
       <nav class="api-selector-nav">
         <div class="selector-group">
           <label for="api-selector">API:</label>
           <select id="api-selector" onchange="loadSelectedAPI()">
-            <option value="openapi.yaml">Producer Readiness API</option>
+            <option value="appstatus.yaml">Application Status API</option>
             <!-- Add more options as you add more APIs -->
             <!-- <option value="another-api/openapi.yaml">Another API</option> -->
           </select>
@@ -43,16 +38,16 @@
   <div id="swagger-ui"></div>
 
   <!-- Swagger UI Bundle -->
-  <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js" charset="UTF-8"></script>
-  <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-standalone-preset.js" charset="UTF-8"></script>
+   <script src="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui-bundle.js" charset="UTF-8"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui-standalone-preset.js" charset="UTF-8"></script>
   <script>
     // Define available APIs and their versions
     const apiDefinitions = {
-      "openapi.yaml": {
-        name: "Producer Readiness API",
+      "appstatus.yaml": {
+        name: "Application Status API",
         versions: {
           "v1": {
-            path: "openapi.yaml",
+            path: "appstatus.yaml",
             displayName: "v1.0.0"
           }
           // Add more versions as needed
