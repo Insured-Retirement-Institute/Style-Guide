@@ -19,9 +19,9 @@ Query String Parameters
 Data definitions
 - **_policyNumber_** is the term used to describe the unique identifier of the policy.
 - **_producer_** is the preferred nomenclature when referring to licensed/appointed professional or firm selling products.
-  - **_producerNumber_**
-  - **_npn_**
-  - **_crdNumber_**
+  - **_producerNumber_**: Carrier assigned unique identifier
+  - **_npn_**: National Producer Number
+  - **_crdNumber_**: Central Registration Depository number
 - **_party_** is the term used to describe a party to the policy (that is not a producer) and may be an individual or another legal entity.
 - Describing individuals and entities
   - **_firstName_**
