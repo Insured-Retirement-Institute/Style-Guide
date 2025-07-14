@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Insurance Policy Application Status APIs
-  description: APIs for managing insurance policy application data including application status, details, transmission, agents, parties, funding, documents, and more.
+  title: Annuity Application Status APIs
+  description: APIs for managing Annuity application data including application status, details, transmission, agents, parties, funding, documents, and more.
   version: 1.0.0
   license:
     name: MIT
@@ -40,7 +40,7 @@ paths:
   /v1/application-statuses:
     get:
       operationId: getApplicationStatuses
-      summary: Retrieve summary application statuses
+      summary: Retrieve summary application statuses 
       description: Retrieve all summary application statuses.
       tags:
         - Application Status
@@ -49,7 +49,6 @@ paths:
         - $ref: '#/components/parameters/senderParticipantId'
         - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
         - $ref: '#/components/parameters/cusip'
         - $ref: '#/components/parameters/producerNumber'
@@ -74,8 +73,8 @@ paths:
   /v1/application-statuses/{policyNumber}:
     get:
       operationId: getApplicationStatusByPolicyNumber
-      summary: Retrieve a detail application status
-      description: Retrieve a detail application status.
+      summary: Retrieve application status
+      description: Retrieve application status for a policy with complete status details.
       tags:
         - Application Status
       parameters:
@@ -83,7 +82,7 @@ paths:
         - $ref: '#/components/parameters/senderParticipantId'
         - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumberRequired'
+        - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
       responses:
         "200":
@@ -110,7 +109,6 @@ paths:
         - $ref: '#/components/parameters/senderParticipantId'
         - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
         - $ref: '#/components/parameters/cusip'
         - $ref: '#/components/parameters/producerNumber'
@@ -138,7 +136,7 @@ paths:
     get:
       operationId: getPolicyByPolicyNumber
       summary: Retrieve a policy
-      description: Retrieve primary data of a policy.
+      description: Retrieve summary application-status of a policy without the details of the statuses of each activity associated with the application
       tags:
         - Policy
       parameters:
@@ -146,7 +144,7 @@ paths:
         - $ref: '#/components/parameters/senderParticipantId'
         - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumberRequired'
+        - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
       responses:
         "200":
@@ -155,59 +153,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Policy"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "404":
-          description: NotFound
-  /v1/application-statuses/policies/{policyNumber}/producers:
-    get:
-      operationId: getPolicyProducersByPolicyNumber
-      summary: Retrieve the producers of a policy
-      description: Retrieve producer data of a policy.
-      tags:
-        - Policy
-      parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
-        - $ref: '#/components/parameters/policyNumberRequired'
-        - $ref: '#/components/parameters/associatedFirmId'
-      responses:
-        "200":
-          description: Policy parties successfully retrieved
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Producers"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "404":
-          description: NotFound
-  /v1/application-statuses/policies/{policyNumber}/parties:
-    get:
-      operationId: getPolicyPartiesByPolicyNumber
-      summary: Retrieve the parties of a policy
-      description: Retrieve party data of a policy.
-      tags:
-        - Policy
-      parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumberRequired'
-        - $ref: '#/components/parameters/associatedFirmId'
-      responses:
-        "200":
-          description: Policy parties successfully retrieved
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Parties"
         "401":
           description: Unauthorized
         "403":
@@ -226,7 +171,7 @@ paths:
         - $ref: '#/components/parameters/senderParticipantId'
         - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumberRequired'
+        - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
       responses:
         "200":
@@ -253,7 +198,7 @@ paths:
         - $ref: '#/components/parameters/senderParticipantId'
         - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumberRequired'
+        - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
       responses:
         "200":
@@ -280,7 +225,7 @@ paths:
         - $ref: '#/components/parameters/senderParticipantId'
         - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumberRequired'
+        - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
       responses:
         "200":
@@ -307,7 +252,7 @@ paths:
         - $ref: '#/components/parameters/senderParticipantId'
         - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumberRequired'
+        - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
       responses:
         "200":
@@ -358,17 +303,11 @@ components:
       required: false
       schema:
         type: string
-    policyNumberRequired:
-      name: policyNumber
-      description: Required query parameter for the policy number to be retrieved
-      in: query
-      required: false
-      schema:
-        type: string
     policyNumber:
       name: policyNumber
-      in: query
-      required: false
+      description: Required path parameter for the policy number to be retrieved
+      in: path
+      required: true
       schema:
         type: string
         minLength: 1
@@ -394,7 +333,7 @@ components:
         pattern: (^[a-zA-Z0-9](9)$)
     producerNumber:
       name: producerNumber
-      description: Optional query parameter for the producer number
+      description: Optional query parameter for the carrier assigned unique identifier.
       in: query
       required: false
       schema:
@@ -402,7 +341,7 @@ components:
         maxLength: 30
     npn:
       name: npn
-      description: Optional query parameter for the NPN
+      description: Optional query parameter for the National Producer Number
       in: query
       required: false
       schema:
@@ -410,7 +349,7 @@ components:
         maxLength: 10
     crdNumber:
       name: crdNumber
-      description: Optional query parameter for the CRD number
+      description: Optional query parameter for the Central Registration Depository number
       in: query
       required: false
       schema:
@@ -544,7 +483,7 @@ components:
           type: string
           minLength: 1
           maxLength: 180
-          pattern: ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,180}
+          pattern: ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,180} 
         taxId:
           type: string
     EntityProducer:
@@ -602,7 +541,7 @@ components:
         anyOf:
           - $ref: "#/components/schemas/IndividualProducer"
           - $ref: "#/components/schemas/EntityProducer"
-    Parties:
+    Parties:  
       description: Schema for parties data
       type: array
       minItems: 1
@@ -743,7 +682,7 @@ components:
     Funding:
       description: Schema for policy funding data
       type: object
-      required: [isActionNeeded, status]
+      required: [isActionNeeded, status]  
       properties:
         startDate:
           type: string
@@ -896,6 +835,27 @@ components:
                 - usps
             trackingNumber:
               type: string
+        caseManager:
+          type: object
+          required: [fullName, phoneNumber]
+          properties:
+            fullName:
+              type: string
+              minLength: 1
+              maxLength: 180
+              pattern:  ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,180}
+            phoneNumber:
+              type: string
+              minLength: 10
+              maxLength: 15
+            emailAddress:
+              type: string
+            websiteURL:
+              type: string
+        producers:
+          $ref: "#/components/schemas/Producers"
+        parties:
+          $ref: "#/components/schemas/Parties"
     Policy:
       description: Schema for policy data
       type: object
@@ -905,8 +865,10 @@ components:
         isActionNeeded:
           type: boolean
         actionSections:
-          type: string
-          enum: [suitability, cansellvalidation, documentReview, funding]
+          type: array
+          items:
+            type: string
+            enum: [suitability, cansellvalidation, documentReview, funding]
         signedDate:
           type: string
           format: date
@@ -973,7 +935,11 @@ components:
             emailAddress:
               type: string
             websiteURL:
-              type: string
+              type: string        
+        producers:
+          $ref: "#/components/schemas/Producers"
+        parties:
+          $ref: "#/components/schemas/Parties"
     Policies:
       description: Schema for policies
       type: array
@@ -1002,14 +968,10 @@ components:
           properties:
             correlationId:
               type: string
-              description: Correlation ID for tracking the request
+              description: Correlation ID for tracking the request    
         - $ref: '#/components/schemas/Policy'
         - type: object
           properties:
-            producers:
-              $ref: "#/components/schemas/Producers"
-            parties:
-              $ref: "#/components/schemas/Parties"
             canSellValidations:
               $ref: "#/components/schemas/CanSellValidation"
             documentReviews:
@@ -1018,24 +980,11 @@ components:
               $ref: "#/components/schemas/Suitability"
             fundings:
               $ref: "#/components/schemas/Funding"
-    SummaryApplicationStatus:
-      description: Schema for summary application status
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/PolicySummary'
-        - type: object
-          properties:
-            producers:
-              $ref: "#/components/schemas/Producers"
-            parties:
-              $ref: "#/components/schemas/Parties"
     SummaryApplicationStatuses:
       description: Schema for application statuses
       type: array
       items:
-        allOf:
-          - $ref: '#/components/schemas/SummaryApplicationStatus'
-          - type: object
+        - $ref: '#/components/schemas/PolicySummary'
     SummaryApplicationStatusesPagedResult:
       description: Schema for the paged result of application statuses
       type: object
@@ -1071,7 +1020,7 @@ components:
         producerNumber:
           type: string
           maxLength: 30
-        npn:
+        npn: 
           type: string
           maxLength: 10
         crdNumber:
