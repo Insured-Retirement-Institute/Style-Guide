@@ -14,6 +14,7 @@ Custom headers
 - **_receiverParticipantId_**: Optional custom header identifying the receiver of the call
 
 Query String Parameters
+- Sending Personally Identifiable Information (PII) as query string parameters such as names, addresses, email addresses, or account numbers, directly in URL query strings is a common practice to be avoided due to the significant privacy and security risks involved. 
 - **_associatedFirmId_**: Optional query parameter for the associated firm ID
 
 Data definitions
