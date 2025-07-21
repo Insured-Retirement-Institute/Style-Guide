@@ -54,7 +54,6 @@ paths:
         - $ref: '#/components/parameters/producerNumber'
         - $ref: '#/components/parameters/npn'
         - $ref: '#/components/parameters/crdNumber'
-        - $ref: '#/components/parameters/partyTaxId'
         - $ref: '#/components/parameters/applicationOriginId'
         - $ref: '#/components/parameters/trackingNumber'
         - $ref: '#/components/parameters/orderBy'
@@ -114,7 +113,6 @@ paths:
         - $ref: '#/components/parameters/producerNumber'
         - $ref: '#/components/parameters/npn'
         - $ref: '#/components/parameters/crdNumber'
-        - $ref: '#/components/parameters/partyTaxId'
         - $ref: '#/components/parameters/applicationOriginId'
         - $ref: '#/components/parameters/trackingNumber'
         - $ref: '#/components/parameters/orderBy'
@@ -355,14 +353,6 @@ components:
       schema:
         type: string
         maxLength: 10
-    partyTaxId:
-      name: partyTaxId
-      description: Optional query parameter for the party tax ID
-      in: query
-      required: false
-      schema:
-        type: string
-        maxLength: 9
     applicationOriginId:
       name: applicationOriginId
       description: Optional query parameter for the application origin ID
