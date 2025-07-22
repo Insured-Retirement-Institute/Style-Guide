@@ -766,7 +766,7 @@ components:
                     format: date
                   referenceNumber:
                     type: string
-                  nextApplicationDate:
+                  nextActivityDate:
                     type: string
                     format: date
                   note:
