@@ -974,7 +974,7 @@ components:
       description: Schema for application statuses
       type: array
       items:
-        - $ref: '#/components/schemas/PolicySummary'
+        $ref: '#/components/schemas/PolicySummary'
     SummaryApplicationStatusesPagedResult:
       description: Schema for the paged result of application statuses
       type: object
