@@ -42,10 +42,47 @@ The [IRI registry](https://www.irionline.org/operations-and-technology/article/d
   - MINOR version when you add functionality in a backward compatible manner (ex: addition of optional fields or possible values)
   - PATCH version when you make backward compatible bug fixes
   - Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
-
+ 
 ## API definition format
 
 API definitions will utilize [OpenAPI 3.1.X](https://swagger.io/specification/) specifications
+
+## Tagging & Releases
+
+Git tags and GitHub releases mark specific points in the project’s history as official, shareable versions.  
+They provide a clear, immutable reference for users and automation tools to download or deploy a stable build.
+
+Follow **Semantic Versioning (MAJOR.MINOR.PATCH)** as outlined above, e.g. `v1.2.3`  
+- **MAJOR**: breaking changes  
+- **MINOR**: new features  
+- **PATCH**: bug fixes  
+- Optional pre-release suffixes: `-rc.1`, `-beta`
+
+### Tagging
+Use **annotated tags** on the main (stable) branch:
+```bash
+git tag -a v1.2.3 -m "Release v1.2.3"
+git push origin v1.2.3
+```
+Tags are immutable—never overwrite an existing tag.
+
+### Creating Releases on GitHub
+Each GitHub Release should correspond to a tag. Releases provide a user-facing summary of what changed, include release notes, and may include built artifacts.
+
+When drafting a release:
+1. Choose or create the appropriate tag.
+2. Select the correct target branch (usually `main` or the stable branch).
+3. Provide a meaningful title.
+4. Write release notes summarizing new features, breaking changes, bug fixes, and any migration steps or compatibility concerns. Properly attribute contributing PRs or issues.
+5. Indicate if the release is a pre-release if it is not yet stable.
+
+Include assets if relevant—binaries, installable packages, archives, etc. (GitHub automatically provides `.zip` and `.tar.gz` of the source at that tag.)
+
+## Workflow / Policies & Governance
+
+**Pull-request merges to `main` require two approvers.** All changes destined for the stable branch must be merged via a pull request and receive at least two approvals before merging.
+
+**Restrict tagging and releasing to authorized maintainers.** Only individuals with appropriate permissions (e.g., maintainers) may approve and create releases or tags. This ensures quality control and prevents accidental or unauthorized releases.
 
 ## Authentication
 
