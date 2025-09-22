@@ -10,12 +10,13 @@ Field naming
 
 Custom headers
 - **_correlationId_**: Optional custom header to be returned to the caller in response payload
-- **_senderParticipantId_**: Optional custom header identifying the sender of the call
-- **_receiverParticipantId_**: Optional custom header identifying the receiver of the call
 
 Query String Parameters
 - Sending **_Personally Identifiable Information (PII)_** as query string parameters such as names, addresses, email addresses, or account numbers, directly in URL query strings is a common practice to be avoided due to the significant privacy and security risks involved. 
 - **_associatedFirmId_**: Optional query parameter for the associated firm ID
+
+Regular Expressions
+- There is no single universally adopted regex "standard," but Perl-Compatible Regular Expressions (PCRE) is the most widely supported and influential standard
 
 Data definitions
 - **_policyNumber_** is the term used to describe the unique identifier of the policy.
