@@ -16,8 +16,6 @@ paths:
         - Application Status
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/finishedCutoffDays'
         - $ref: '#/components/parameters/orderBy'
@@ -47,8 +45,6 @@ paths:
         - Application Status
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/associatedFirmId'
         - $ref: '#/components/parameters/cusip'
@@ -80,8 +76,6 @@ paths:
         - Application Status
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
@@ -107,8 +101,6 @@ paths:
         - Policy
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/associatedFirmId'
         - $ref: '#/components/parameters/cusip'
@@ -142,8 +134,6 @@ paths:
         - Policy
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
@@ -169,8 +159,6 @@ paths:
         - Policy
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
@@ -196,8 +184,6 @@ paths:
         - Policy
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
@@ -223,8 +209,6 @@ paths:
         - Policy
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
@@ -250,8 +234,6 @@ paths:
         - Policy
       parameters:
         - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/senderParticipantId'
-        - $ref: '#/components/parameters/receiverParticipantId'
         - $ref: '#/components/parameters/brokerNumber'
         - $ref: '#/components/parameters/policyNumber'
         - $ref: '#/components/parameters/associatedFirmId'
@@ -277,26 +259,6 @@ components:
       required: false
       schema:
         type: string
-    senderParticipantId:
-      name: senderParticipantId
-      description: Optional custom header identifying the sender of the call
-      in: header
-      required: false
-      schema:
-        type: string
-        minLength: 8
-        maxLength: 8
-        pattern: (^[0-9]{8}$)(?<!^0+$)
-    receiverParticipantId:
-      name: receiverParticipantId
-      description: Optional custom header identifying the receiver of the call
-      in: header
-      required: false
-      schema:
-        type: string
-        minLength: 8
-        maxLength: 8
-        pattern: (^[0-9]{8}$)(?<!^0+$)
     brokerNumber:
       name: brokerNumber
       description: Optional custom header identifying the broker number of the call
@@ -328,10 +290,7 @@ components:
       in: query
       required: false
       schema:
-        type: string
-        minLength: 9
-        maxLength: 9
-        pattern: (^[a-zA-Z0-9](9)$)
+        $ref: '#/components/schemas/cusip'
     producerNumber:
       name: producerNumber
       description: Optional query parameter for the carrier assigned unique identifier.
@@ -415,6 +374,11 @@ components:
         minimum: 1
         maximum: 1000
   schemas:
+    cusip:
+      type: string
+      minLength: 9
+      maxLength: 9
+      pattern:  ^[0-9]{3}[A-Z0-9]{5}[0-9]$
     IndividualIdentity:
       description: Schema for individual identity data
       required: [firstName,lastName]
@@ -427,17 +391,17 @@ components:
           type: string
           minLength: 1
           maxLength: 105
-          pattern: ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,105}
+          pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,105}$
         middleName:
           type: string
           minLength: 1
           maxLength: 105
-          pattern: ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,105}
+          pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,105}$
         lastName:
           type: string
           minLength: 1
           maxLength: 105
-          pattern: ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,105}
+          pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,105}$
         taxId:
           type: string
           maxLength: 9
@@ -484,7 +448,7 @@ components:
           type: string
           minLength: 1
           maxLength: 180
-          pattern: ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,180} 
+          pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,180}$
         taxId:
           type: string
     EntityProducer:
@@ -773,7 +737,7 @@ components:
                     type: string
                     minLength: 1
                     maxLength: 180
-                    pattern:  ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,180}
+                    pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,180}$
                   accountNumber:
                     type: string
                   startDate:
@@ -795,7 +759,7 @@ components:
     PolicySummary:
       description: Schema for policy summary data
       type: object
-      required: [policyNumber,applicationOrigin,cusip,status,statusDate,isActionNeeded,signedDate]
+      required: [policyNumber,applicationOrigin,cusip,status,statusDate]
       properties:
         policyNumber:
           type: string
@@ -815,10 +779,7 @@ components:
               type: string
               maxLength: 65
         cusip:
-          type: string
-          minLength: 9
-          maxLength: 9
-          pattern: (^[a-zA-Z0-9](9)$)
+          $ref: '#/components/schemas/cusip'
         productName:
           type: string
           maxLength: 180
@@ -855,7 +816,7 @@ components:
               type: string
               minLength: 1
               maxLength: 180
-              pattern:  ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,180}
+              pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,180}$
             phoneNumber:
               type: string
               minLength: 10
@@ -913,45 +874,6 @@ components:
               type: string
               minLength: 1
               maxLength: 2000
-        delivery:
-          type: object
-          properties:
-            sentDate:
-              type: string
-              format: date
-            method:
-              type: string
-              enum:
-                - fedex
-                - ups
-                - electronicDelivery
-                - handDelivery
-                - usps
-            trackingNumber:
-              type: string
-              minLength: 1
-              maxLength: 65
-        caseManager:
-          type: object
-          required: [fullName, phoneNumber]
-          properties:
-            fullName:
-              type: string
-              minLength: 1
-              maxLength: 180
-              pattern:  ^[a-zA-Z0-9=()=*@#\\s.,'_/~%$!();:&amp;&quot;+&#x00ae;®`\\-\\\\?\"=]{1,180}
-            phoneNumber:
-              type: string
-              minLength: 10
-              maxLength: 15
-            emailAddress:
-              type: string
-            websiteURL:
-              type: string        
-        producers:
-          $ref: "#/components/schemas/Producers"
-        parties:
-          $ref: "#/components/schemas/Parties"
     Policies:
       description: Schema for policies
       type: array
@@ -1025,10 +947,7 @@ components:
           minLength: 1
           maxLength: 65
         cusip:
-          type: string
-          minLength: 9
-          maxLength: 9
-          pattern: (^[a-zA-Z0-9](9)$)
+          $ref: '#/components/schemas/cusip'
         producerNumber:
           type: string
           maxLength: 30
