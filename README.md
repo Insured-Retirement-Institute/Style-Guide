@@ -32,10 +32,7 @@ Data definitions
   - **_taxId_**
   - **_name_** (for business/entity)
 
-## Versioning
-
-Individual firms decide the versions they will support.
-The [IRI registry](https://www.irionline.org/operations-and-technology/article/digital-first-for-annuities-dashboard/) encompasses which firms support which APIs and what versions those consiste of. Firms can support multiple versions if they choose, and parties are free to add custom fields, headers, and data to existing definitions at their own risk.
+## API Versioning
 
 - APIs will utilize versioning at the URL level. In this method, the API endpoint URL includes the major version number. For example, users wanting to retrieve all products from a database would send a request to https://example-api.com/v1/products. The specific version of an API can be specified as an optional header as outlined above.
 - Release changes will institute [Semantic Versioning (SemVer)](https://semver.org/) for the versioning scheme to conveys the meaning about the changes in a release. To summarize, given a version number MAJOR.MINOR.PATCH, increment the:
@@ -84,10 +81,24 @@ Include assets if relevant—binaries, installable packages, archives, etc. (Git
 **Pull-request merges to `main` require two approvers.** All changes destined for the stable branch must be merged via a pull request and receive at least two approvals before merging.
 
 **Restrict tagging and releasing to authorized maintainers.** Only individuals with appropriate permissions (e.g., maintainers) may approve and create releases or tags. This ensures quality control and prevents accidental or unauthorized releases.
+## Implementation Considerations
 
-## Authentication
+### Versioning
 
-Individual firms decide the authentication mechanism they will support. Parties are free to decide how their integrations will authenticate with one another.
+- Individual firms decide the versions they will support.
+- The [IRI registry](https://www.irionline.org/operations-and-technology/article/digital-first-for-annuities-dashboard/) lists which firms support which API versions. 
+- Firms can support multiple versions if they choose.
+
+### Extending the specification
+
+- The focus of the standard specification is to specify the data structures and how they are used in API requests and responses to ensure consistency across implementations. 
+- When implementing the specification, parties are free to add custom fields, headers, and data to existing definitions at their own risk.
+- It is strongly recommended that implementers avoid modifying the data structures. 
+- It is recommend that custom headers be used to facilitate exchange of request meta-data that allows the receiver to process the request correctly or for tracking purposes. - Example: a service provider may require that distributors include sourceFirmId and targetFirmId and correlationId header fields to facilitate transmission of the data to downstream carriers that would not necessarily be required in direct API integration between distributor and carrier.
+
+### Authentication
+
+- Individual firms decide the authentication mechanism they will support. Parties are free to decide how their integrations will authenticate with one another.
 
 ## Change subsmissions and reporting issues and bugs
 
