@@ -19,6 +19,7 @@
           <label for="api-selector">API:</label>
           <select id="api-selector" onchange="loadSelectedAPI()">
             <option value="appstatus.yaml">Application Status API</option>
+            <option value="producertrainingupdate.yaml">Producer Training Update</option>
             <!-- Add more options as you add more APIs -->
             <!-- <option value="another-api/openapi.yaml">Another API</option> -->
           </select>
@@ -54,17 +55,17 @@
             path: "appstatusv2.yaml",
             displayName: "v2.0.0"
           }
-          // Add more versions as needed
-          // "v2": { path: "v2/openapi.yaml", displayName: "v2.0.0" }
+        }
+      },
+      "producertrainingupdate.yaml": {
+        name: "Producer Training Update",
+        versions: {
+          "v1": {
+            path: "producertrainingupdatev1.yaml",
+            displayName: "v1.0.0"
+          }
         }
       }
-      // Add more APIs as needed
-      // "another-api/openapi.yaml": {
-      //   name: "Another API",
-      //   versions: {
-      //     "v1": { path: "another-api/openapi.yaml", displayName: "v1.0.0" }
-      //   }
-      // }
     };
 
     function populateVersionSelector(apiKey) {
