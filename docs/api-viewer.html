@@ -20,6 +20,7 @@
           <select id="api-selector" onchange="loadSelectedAPI()">
             <option value="appstatus.yaml">Application Status API</option>
             <option value="producertrainingupdate.yaml">Producer Training Update</option>
+            <option value="policyincome.yaml">Policy Income API</option>
             <!-- Add more options as you add more APIs -->
             <!-- <option value="another-api/openapi.yaml">Another API</option> -->
           </select>
@@ -62,6 +63,15 @@
         versions: {
           "v1": {
             path: "producertrainingupdatev1.yaml",
+            displayName: "v1.0.0"
+          }
+        }
+      },
+      "policyincome.yaml": {
+        name: "Policy Income API",
+        versions: {
+          "v1": {
+            path: "policyincomev1.yaml",
             displayName: "v1.0.0"
           }
         }
