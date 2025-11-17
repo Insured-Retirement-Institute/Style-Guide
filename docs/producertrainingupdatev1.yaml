@@ -1,22 +1,20 @@
 openapi: 3.1.0
 info:
-  title: Producer
+  title: Producer Training Update
+  description: APIs enables training vendors, carriers, or distributors (senders)
+    to transmit producer training information.
   version: 1.0.0
-servers:
-  - url: https://iiex.api.dtcc.com/producer/v1
-  - url: https://iiex.apipse.dtcc.com/producer/v1
-  - url: https://iiex.apipse.dtcc.net/producer/v1
-  - url: https://demo.api.dtcc.com/iiex-producer/v1
-  - url: https://iiex.api.dtcc.net/producer/v1
-security:
-  - basicAuth: []
+  license:
+    name: MIT
+    url: https://github.com/Insured-Retirement-Institute/Pending-Case/blob/main/LICENSE
+servers: []
 tags:
-  - name: Producer Training Update
+- name: Producer Training Update
 paths:
   /producerTrainingUpdate:
     post:
       tags:
-        - Producer Training Update
+      - Producer Training Update
       summary: An API to request producer training update information
       requestBody:
         description: Request body to get producer training update information
@@ -37,23 +35,23 @@ paths:
                 crd: '1234567890'
                 ssn: '123456789'
               courseInformationList:
-                - provider: WEBCE
-                  ID: COURSE123
-                  name: Understanding Annuities
-                  method: ONLINE
-                  type: PRODUCT
-                  originatingJurisdiction: DC
-                  originatingJurisdictionCreditHours: 7
-                  reciprocityJurisdictionsList:
-                    - jurisdiction: NY
-                      creditHours: 5
-                    - jurisdiction: NJ
-                      creditHours: 7
-                  cusip:
-                    - '449817501'
-                  productTrainingCategory: Deferred Income Annuity
-                  trainingCompletionDate: '2025-02-10'
-                  trainingExpirationDate: '2025-10-10'
+              - provider: WEBCE
+                ID: COURSE123
+                name: Understanding Annuities
+                method: ONLINE
+                type: PRODUCT
+                originatingJurisdiction: DC
+                originatingJurisdictionCreditHours: 7
+                reciprocityJurisdictionsList:
+                - jurisdiction: NY
+                  creditHours: 5
+                - jurisdiction: NJ
+                  creditHours: 7
+                cusip:
+                - '449817501'
+                productTrainingCategory: Deferred Income Annuity
+                trainingCompletionDate: '2025-02-10'
+                trainingExpirationDate: '2025-10-10'
       responses:
         '200':
           description: success
@@ -66,43 +64,28 @@ paths:
                 messageStatus:
                   statusCode: '200'
         '400':
-          description: BadRequest
           $ref: '#/components/responses/ErrorBadRequest'
         '401':
-          description: Unauthorized
           $ref: '#/components/responses/ErrorUnauthorized'
         '403':
-          description: Forbidden
           $ref: '#/components/responses/ErrorForbidden'
         '404':
-          description: NotFound
           $ref: '#/components/responses/ErrorNotFound'
         '405':
-          description: MethodNotAllowed
           $ref: '#/components/responses/ErrorMethodNotAllowed'
         '406':
-          description: MethodNotAcceptable
           $ref: '#/components/responses/ErrorMethodNotAcceptable'
         '413':
-          description: PayloadTooLarge
           $ref: '#/components/responses/ErrorPayloadTooLarge'
         '415':
-          description: UnsupportedMediaType
           $ref: '#/components/responses/ErrorUnsupportedMediaType'
         '429':
-          description: TooManyRequests
           $ref: '#/components/responses/ErrorTooManyRequests'
         '500':
-          description: InternalServerError
           $ref: '#/components/responses/ErrorInternalServerError'
         '503':
-          description: ServiceUnavailable
           $ref: '#/components/responses/ErrorServiceUnavailable'
 components:
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
   schemas:
     Error:
       type: object
@@ -111,44 +94,45 @@ components:
           type: integer
         description:
           type: string
-          examples:
-            - Invalid Request
+          example: Invalid Request
     producerTrainingUpdateRequest:
       type: object
       required:
-        - messageInformation
-        - producer
-        - courseInformationList
+      - messageInformation
+      - producer
+      - courseInformationList
       properties:
         messageInformation:
-          $ref: '#/components/schemas/messageInformationForProducerTrainingUpdate'
+          $ref: '#/components/schemas/messageInformation'
         producer:
-          $ref: '#/components/schemas/producerForProducerTrainingUpdate'
+          $ref: '#/components/schemas/producer'
         courseInformationList:
           type: array
           items:
-            $ref: '#/components/schemas/courseInformationForProducerTrainingUpdate'
+            $ref: '#/components/schemas/courseInformation'
           minItems: 1
           maxItems: 12
       propertyNames:
         enum:
-          - messageInformation
-          - producer
-          - courseInformationList
-    messageInformationForProducerTrainingUpdate:
-      description: The Message Information Resource is designed to provide all the information about a message.
+        - messageInformation
+        - producer
+        - courseInformationList
+    messageInformation:
+      description: The Message Information Resource is designed to provide all the
+        information about a message.
       type: object
       required:
-        - messageType
-        - sender
-        - receiver
-        - trackingNumber
+      - messageType
+      - sender
+      - receiver
+      - trackingNumber
       properties:
         messageType:
-          description: This identifies the type of message being submitted in this message.
+          description: This identifies the type of message being submitted in this
+            message.
           type: string
           enum:
-            - PTU
+          - PTU
         sender:
           description: This identifies the originator this message.
           type: string
@@ -160,15 +144,16 @@ components:
           minLength: 8
           maxLength: 8
         trackingNumber:
-          description: This is an unique alphanumeric value used to identify a specific transaction.
+          description: This is an unique alphanumeric value used to identify a specific
+            transaction.
           type: string
           minLength: 1
           maxLength: 65
-    producerForProducerTrainingUpdate:
+    producer:
       type: object
       required:
-        - firstName
-        - lastName
+      - firstName
+      - lastName
       properties:
         firstName:
           type: string
@@ -184,13 +169,15 @@ components:
           pattern: (^[a-zA-Z0-9=()=*@#\s.,'_/~%$!();:&amp;&quot;+&#x00ae;`\-\?"=]{1,105}$)
         npn:
           type: string
-          description: The National Producer Number (NPN) assigned by NIPR to identify the financial professional.
+          description: The National Producer Number (NPN) assigned by NIPR to identify
+            the financial professional.
           minLength: 5
           maxLength: 10
           pattern: ^(?!\s*$)[^\s]+$
         crd:
           type: string
-          description: The Central Registration Depository (CRD) number assigned by FINRA to identify the financial professional.
+          description: The Central Registration Depository (CRD) number assigned by
+            FINRA to identify the financial professional.
           minLength: 5
           maxLength: 10
           pattern: ^(?!\s*$)[^\s]+$
@@ -198,31 +185,33 @@ components:
           type: string
           minLength: 9
           maxLength: 9
-          description: The unique nine-digit identifier issued by the U.S. Social Security Administration (SSA) to identify the financial professional.
-    courseInformationForProducerTrainingUpdate:
-      description: This object identifies the course details being reported on the defined financial professional.
+          description: The unique nine-digit identifier issued by the U.S. Social
+            Security Administration (SSA) to identify the financial professional.
+    courseInformation:
+      description: This object identifies the course details being reported on the
+        defined financial professional.
       type: object
       required:
-        - provider
-        - ID
-        - name
-        - type
-        - trainingCompletionDate
+      - provider
+      - ID
+      - name
+      - type
+      - trainingCompletionDate
       properties:
         provider:
           type: string
           description: This is to identify the provider of this particular training.
           enum:
-            - AD BANKER
-            - KAPLAN
-            - LUMA
-            - PINPOINT
-            - QUESTCE
-            - REGED
-            - SUCCESSCE
-            - ICAPITAL
-            - SMARTPROS
-            - WEBCE
+          - AD BANKER
+          - KAPLAN
+          - LUMA
+          - PINPOINT
+          - QUESTCE
+          - REGED
+          - SUCCESSCE
+          - ICAPITAL
+          - SMARTPROS
+          - WEBCE
         ID:
           type: string
           minLength: 1
@@ -237,22 +226,22 @@ components:
           type: string
           description: Method by which training was completed.
           enum:
-            - ONLINE
-            - CLASSROOM
-            - REFERENCE MATERIALS
-            - WHOLESALER
+          - ONLINE
+          - CLASSROOM
+          - REFERENCE MATERIALS
+          - WHOLESALER
         type:
           type: string
           description: Type of course completed.
           enum:
-            - STATE
-            - PRODUCT
-            - BEST INTEREST
-            - DISABILITY
-            - LONG TERM CARE
-            - RIDER
-            - ETHICS
-            - ANTI-MONEY LAUNDERING
+          - STATE
+          - PRODUCT
+          - BEST INTEREST
+          - DISABILITY
+          - LONG TERM CARE
+          - RIDER
+          - ETHICS
+          - ANTI-MONEY LAUNDERING
         originatingJurisdiction:
           $ref: '#/components/schemas/jurisdiction'
           description: Jurisdiction that completion applies to (for state training).
@@ -273,10 +262,11 @@ components:
                 minimum: 1
                 maximum: 999
             required:
-              - jurisdiction
+            - jurisdiction
           minItems: 1
           maxItems: 54
-          description: List of jurisdictions and credit hours for reciprocity of the state training.
+          description: List of jurisdictions and credit hours for reciprocity of the
+            state training.
         cusip:
           type: array
           items:
@@ -286,34 +276,35 @@ components:
             pattern: (^[a-zA-Z0-9]{9}$)
           minItems: 1
           maxItems: 250
-          description: CUSIP identifier for product that completion applies to (for product training).
+          description: CUSIP identifier for product that completion applies to (for
+            product training).
         productTrainingCategory:
           type: string
           description: Type of product associated with product training.
           enum:
-            - Contingent Deferred Annuity
-            - Deferred Income Annuity
-            - Disability
-            - Fixed Index Annuity
-            - Fixed Annuity
-            - Fixed Immediate Annuity
-            - Index Variable Annuity
-            - Fixed Universal Life
-            - Fixed Whole Life
-            - Long Term Care
-            - Pension Plan
-            - Retirement Plan
-            - Term Life
-            - Variable Annuity
-            - Variable Immediate Annuity
-            - Variable Universal Life
-            - Variable Whole Life
-            - Index Life
-            - All Annuities
-            - All Fixed Annuities
-            - All Variable Annuities
-            - Life
-            - Variable & Fixed Deferred Annuity
+          - Contingent Deferred Annuity
+          - Deferred Income Annuity
+          - Disability
+          - Fixed Index Annuity
+          - Fixed Annuity
+          - Fixed Immediate Annuity
+          - Index Variable Annuity
+          - Fixed Universal Life
+          - Fixed Whole Life
+          - Long Term Care
+          - Pension Plan
+          - Retirement Plan
+          - Term Life
+          - Variable Annuity
+          - Variable Immediate Annuity
+          - Variable Universal Life
+          - Variable Whole Life
+          - Index Life
+          - All Annuities
+          - All Fixed Annuities
+          - All Variable Annuities
+          - Life
+          - Variable & Fixed Deferred Annuity
         trainingCompletionDate:
           type: string
           format: date
@@ -324,108 +315,108 @@ components:
           description: Date on which training will expire.
       propertyNames:
         enum:
-          - provider
-          - ID
-          - name
-          - method
-          - type
-          - originatingJurisdiction
-          - originatingJurisdictionCreditHours
-          - reciprocityJurisdictionsList
-          - cusip
-          - productTrainingCategory
-          - trainingCompletionDate
-          - trainingExpirationDate
+        - provider
+        - ID
+        - name
+        - method
+        - type
+        - originatingJurisdiction
+        - originatingJurisdictionCreditHours
+        - reciprocityJurisdictionsList
+        - cusip
+        - productTrainingCategory
+        - trainingCompletionDate
+        - trainingExpirationDate
       allOf:
-        - if:
-            anyOf:
-              - properties:
-                  type:
-                    enum:
-                      - STATE
-                      - BEST INTEREST
-              - required:
-                  - originatingJurisdictionCreditHours
-          then:
-            required:
-              - originatingJurisdiction
-        - if:
-            not:
-              required:
-                - cusip
-          then:
-            required:
-              - productTrainingCategory
-        - if:
-            properties:
+      - if:
+          anyOf:
+          - properties:
               type:
                 enum:
-                  - PRODUCT
-          then:
+                - STATE
+                - BEST INTEREST
+          - required:
+            - originatingJurisdictionCreditHours
+        then:
+          required:
+          - originatingJurisdiction
+      - if:
+          not:
             required:
-              - cusip
+            - cusip
+        then:
+          required:
+          - productTrainingCategory
+      - if:
+          properties:
+            type:
+              enum:
+              - PRODUCT
+        then:
+          required:
+          - cusip
     jurisdiction:
       type: string
       enum:
-        - AL
-        - AK
-        - AZ
-        - AR
-        - CA
-        - CO
-        - CT
-        - DE
-        - DC
-        - FL
-        - GA
-        - GU
-        - HI
-        - ID
-        - IL
-        - IN
-        - IA
-        - KS
-        - KY
-        - LA
-        - ME
-        - MD
-        - MA
-        - MI
-        - MN
-        - MS
-        - MO
-        - MT
-        - NE
-        - NV
-        - NH
-        - NJ
-        - NM
-        - NY
-        - NC
-        - ND
-        - OH
-        - OK
-        - OR
-        - PA
-        - PR
-        - RI
-        - SC
-        - SD
-        - TN
-        - TX
-        - UT
-        - VT
-        - VI
-        - VA
-        - WA
-        - WV
-        - WI
-        - WY
+      - AL
+      - AK
+      - AZ
+      - AR
+      - CA
+      - CO
+      - CT
+      - DE
+      - DC
+      - FL
+      - GA
+      - GU
+      - HI
+      - ID
+      - IL
+      - IN
+      - IA
+      - KS
+      - KY
+      - LA
+      - ME
+      - MD
+      - MA
+      - MI
+      - MN
+      - MS
+      - MO
+      - MT
+      - NE
+      - NV
+      - NH
+      - NJ
+      - NM
+      - NY
+      - NC
+      - ND
+      - OH
+      - OK
+      - OR
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UT
+      - VT
+      - VI
+      - VA
+      - WA
+      - WV
+      - WI
+      - WY
     producerTrainingUpdateResponse:
       type: object
       required:
-        - trackingNumber
-        - messageStatus
+      - trackingNumber
+      - messageStatus
       properties:
         trackingNumber:
           type: string
@@ -433,21 +424,25 @@ components:
           minLength: 1
           maxLength: 65
         messageStatus:
-          $ref: '#/components/schemas/messageStatusForProducerTrainingUpdate'
-    messageStatusForProducerTrainingUpdate:
+          $ref: '#/components/schemas/messageStatus'
+    messageStatus:
       type: object
-      description: This object is used in a response message to provide the complete status from the result of processing the matching request
+      description: This object is used in a response message to provide the complete
+        status from the result of processing the matching request
       required:
-        - statusCode
+      - statusCode
       properties:
         statusCode:
           type: string
-          description: A code  for response messages indicating the status or result following receipt of the request message.
+          description: A code  for response messages indicating the status or result
+            following receipt of the request message.
           enum:
-            - '200'
+          - '200'
   responses:
     ErrorBadRequest:
-      description: The server cannot or will not process the request due to an apparent client error (e.g., malformed request syntax, size too large, invalid request message framing, or deceptive request routing)
+      description: The server cannot or will not process the request due to an apparent
+        client error (e.g., malformed request syntax, size too large, invalid request
+        message framing, or deceptive request routing)
       content:
         application/json:
           schema:
@@ -455,7 +450,8 @@ components:
             items:
               $ref: '#/components/schemas/Error'
     ErrorUnauthorized:
-      description: The client did not provide valid security credentials and thus wasn't authenticated
+      description: The client did not provide valid security credentials and thus
+        wasn't authenticated
       content:
         application/json:
           schema:
@@ -463,7 +459,8 @@ components:
             items:
               $ref: '#/components/schemas/Error'
     ErrorForbidden:
-      description: The client was authenticated but is not authorized to perform the request
+      description: The client was authenticated but is not authorized to perform the
+        request
       content:
         application/json:
           schema:
@@ -479,7 +476,9 @@ components:
             items:
               $ref: '#/components/schemas/Error'
     ErrorMethodNotAllowed:
-      description: A request method is not supported for the requested resource; for example, a GET request on a form that requires data to be presented via POST, or a PUT request on a read-only resource.
+      description: A request method is not supported for the requested resource; for
+        example, a GET request on a form that requires data to be presented via POST,
+        or a PUT request on a read-only resource.
       content:
         application/json:
           schema:
@@ -487,7 +486,8 @@ components:
             items:
               $ref: '#/components/schemas/Error'
     ErrorMethodNotAcceptable:
-      description: The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request.
+      description: The requested resource is capable of generating only content not
+        acceptable according to the Accept headers sent in the request.
       content:
         application/json:
           schema:
@@ -495,7 +495,9 @@ components:
             items:
               $ref: '#/components/schemas/Error'
     ErrorUnsupportedMediaType:
-      description: The request entity has a media type which the server or resource does not support. For example, the client uploads an image as image/svg+xml, but the server requires that images use a different format.
+      description: The request entity has a media type which the server or resource
+        does not support. For example, the client uploads an image as image/svg+xml,
+        but the server requires that images use a different format.
       content:
         application/json:
           schema:
@@ -511,7 +513,8 @@ components:
             items:
               $ref: '#/components/schemas/Error'
     ErrorInternalServerError:
-      description: An unexpected condition was encountered; please contact DTCC client support
+      description: An unexpected condition was encountered; please contact DTCC client
+        support
       content:
         application/json:
           schema:
@@ -519,7 +522,8 @@ components:
             items:
               $ref: '#/components/schemas/Error'
     ErrorServiceUnavailable:
-      description: The server cannot handle the request at the moment. Check the API Specification for scheduled API downtimes
+      description: The server cannot handle the request at the moment. Check the API
+        Specification for scheduled API downtimes
       content:
         application/json:
           schema:
