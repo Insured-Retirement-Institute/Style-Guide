@@ -8,21 +8,17 @@ info:
     email: kdease@irionline.org
 
 paths:
-  /v1/policyincome:      
-    post:
-      operationId: postGetPolicyIncomeDetailsByPolicyNumber
-      summary: Get Policy Income Activation Details By PolicyNumber.
-      description: Get Policy Income Activation Details By PolicyNumber.
+  /v1/policies/{policyNumber}/incomeActivation:      
+    get:
+      operationId: getPolicyIncomeActivationByPolicyNumber
+      summary: Get Policy Income Activation By PolicyNumber.
+      description: Get Policy Income Activation By PolicyNumber.
       tags:
         - Policy Income Activation
       parameters:
+        - $ref: '#/components/parameters/policyNumber'
+        - $ref: '#/components/parameters/cusip'
         - $ref: '#/components/parameters/correlationId'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PolicyIncomeActivationRequest'
       responses:
           "200":
             description: Policy Income Activation retrieved successfully.
@@ -46,6 +42,20 @@ paths:
             description: Gateway Timeout.
 components:
   parameters:
+    policyNumber:
+      name: policyNumber
+      description: Required path parameter for the policy number to be retrieved
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/policyNumber'
+    cusip:
+      name: cusip
+      description: Optional query parameter for the CUSIP
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/cusip'
     correlationId:
       name: correlationId
       description: Optional custom header to be returned to the caller in response payload
@@ -54,26 +64,22 @@ components:
       schema:
         type: string
   schemas:
-    PolicyIncomeActivationRequest:
-      description: Schema for policy income activation request
-      required: [policyNumber]
-      type: object
-      properties:
-        policyNumber:
-          type: string
-          examples: 
-            - "241235566"
-        cusip:
-          type: string
-          examples: 
-            - "037833100"
+    cusip:
+      type: string
+      minLength: 9
+      maxLength: 9
+      pattern:  ^[0-9]{3}[A-Z0-9]{5}[0-9]$
+    policyNumber:
+      type: string
+      minLength: 1
+      maxLength: 30
     PolicyIncomeActivationResponse:
+      description: Schema for policy income activation data
       type: object
+      required: [policyNumber, isIncomeRiderActivated]
       properties:
         policyNumber:
-          type: string
-          examples: 
-            - "241235566"
+          $ref: '#/components/schemas/cusip'
         isIncomeRiderActivated:
           type: boolean
         lastPaymentDate:
@@ -93,8 +99,8 @@ components:
             - 2500.00
         paymentsPerYear:
           type: integer
-          min: 1
-          max: 365
+          minimum: 1
+          maximum: 365
           examples: 
             - 24
         cusip:
