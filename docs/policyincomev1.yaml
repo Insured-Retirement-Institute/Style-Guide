@@ -1,241 +1,112 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
-  title: policyincome-api
+  title: Annuity Policy Income Activation APIs
   version: "1.0.0"
-  description: >-
-    The Policy Income API -
-
-    This API is to get the policy income details based on policy number
-    
-  termsOfService: ""
-  contact:
-    name: Raja Kumarasamy
-    email: raja.kumarasamy@corebridgefinancial.com
-tags:
-  - name: PolicyIncomeController
-    description: Controller to get list of policies income    
-security:
-  - policiesIncomeAuth: [policiesIncomeRead]
-  
+  description: APIs for managing income activation of policies
 paths:
-
-  /v1/policyincome:      
-    post:
-      tags: 
-        - PolicyIncomeController
-      operationId: GetPolicyIncomeDetailsByPolicyNumberUsingPOST
-      summary: Get Policy Income Details By PolicyNumber.
-      description: Get Policy Income Details By PolicyNumber.
-      
+  /v1/policies/{policyNumber}/income-activation:      
+    get:
+      operationId: getPolicyIncomeActivationByPolicyNumber
+      summary: Get Policy Income Activation By PolicyNumber.
+      description: Get Policy Income Activation By PolicyNumber.
+      tags:
+        - Policy Income Activation
       parameters:
-        
-        - in : header
-          name: correlationID
-          required: true
-          schema:
-            type: string
-          description: The Tracking Number.
-
-      
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PolicyIncomeRequest'
-            examples:
-              PolicyIncomeRequest:
-                value:
-                  {
-                    "policyNumber": "241235566",
-                    "cusip": "037833100"
-                  }            
+        - $ref: '#/components/parameters/policyNumber'
+        - $ref: '#/components/parameters/cusip'
+        - $ref: '#/components/parameters/correlationId'
       responses:
-          200:
-            description: Policy Income retrieved successfully.
+          "200":
+            description: Policy Income Activation retrieved successfully.
             content:
               application/json:
                 schema:
-                     $ref: '#/components/schemas/PolicyIncomeResponse'  
-                examples:
-                  PolicyIncomeResponse:
-                    value:
-                      {
-                        "policyNumber": "241235566",
-                        "isIncomeActivated": true,        
-                        "lastPaymentDate": "2025-09-16",
-                        "netPaymentAmount": 5000.00,
-                        "grossPaymentAmount": 2500.00,
-                        "paymentsPerYear": 24, #(will range from 1 to 365)
-                        "cusip": "037833100",
-                        "incomeType": "IncomeRiders" #(options are 'Annuitized', 'IncomeRiders', 'ScheduledPayments', 'RMD')
-                      }
-
-          400:
-            description: Bad Request.
-            content:
-              application/json:
-                schema:
-                     $ref: '#/components/schemas/PolicyIncomeResponse' 
-                examples:
-                  PolicyIncomeResponse:
-                    value:
-                      {
-                        "description": "Duplicate Policy - Please resubmit with policyNumber and cusip"
-                        
-                      }
-
-          401:
-            description: Unauthorized.
-            content:
-              application/json:
-                schema:
-                     $ref: '#/components/schemas/PolicyIncomeResponse' 
-                examples:
-                  PolicyIncomeResponse:
-                    value:
-                      {
-                       
-                      }
- 
-          404:
-            description: Not Found.
-            content:
-              application/json:
-                schema:
-                     $ref: '#/components/schemas/PolicyIncomeResponse' 
-                examples:
-                  PolicyIncomeResponse:
-                    value:
-                      {
-                       "description": "Policy Number not found"
-                       
-                      }
-                      
-          405:
-            description: Method Not Allowed.
-            content:
-              application/json:
-                schema:
-                     $ref: '#/components/schemas/PolicyIncomeResponse' 
-                examples:
-                  PolicyIncomeResponse:
-                    value:
-                      {
-                       "description": "Request method 'GET' not supported"
-                        
-                      }   
-          500:
-            description: Internal Server Error.
-            content:
-              application/json:
-                schema:
-                     $ref: '#/components/schemas/PolicyIncomeResponse' 
-                examples:
-                  PolicyIncomeResponse:
-                    value:
-                      {
-                       "description": "IO Error: The Network Adapter could not establish the connection"
-                       
-                      }
-          503:
-            description: Service Unavailable.
-            content:
-              application/json:
-                schema:
-                     $ref: '#/components/schemas/PolicyIncomeResponse' 
-                examples:
-                  PolicyIncomeResponse:
-                    value:
-                      {
-                       
-                      } 
-          default:
+                     $ref: '#/components/schemas/PolicyIncomeActivationResponse'
+          "400":
+            description: Bad Request
+          "401":
+            description: Unauthorized 
+          "404":
+            description: Not Found
+          "405":
+            description: Method Not Allowed
+          "500":
+            description: Internal Server Error
+          "503":
+            description: Service Unavailable
+          "504":
             description: Gateway Timeout.
-            content:
-              application/json:
-                schema:
-                     $ref: '#/components/schemas/PolicyIncomeResponse' 
-                examples:
-                  PolicyIncomeResponse:
-                    value:
-                      {
-                       "description": "Gateway Timeout"
-                        
-                      }  
-                    
-      security:
-        - policiesIncomeAuth:
-          - policyIncomeRead                     
-
-
 components:
+  parameters:
+    policyNumber:
+      name: policyNumber
+      description: Required path parameter for the policy number to be retrieved
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/policyNumber'
+    cusip:
+      name: cusip
+      description: Optional query parameter for the CUSIP
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/cusip'
+    correlationId:
+      name: correlationId
+      description: Optional custom header to be returned to the caller in response payload
+      in: header
+      required: false
+      schema:
+        type: string
   schemas:
-
-    PolicyIncomeRequest:
+    cusip:
+      type: string
+      minLength: 9
+      maxLength: 9
+      pattern:  ^[0-9]{3}[A-Z0-9]{5}[0-9]$
+    policyNumber:
+      type: string
+      minLength: 1
+      maxLength: 30
+    PolicyIncomeActivationResponse:
+      description: Schema for policy income activation data
       type: object
+      required: [policyNumber, isIncomeRiderActivated]
       properties:
         policyNumber:
-          type: string
-          example: 241235566
-        cusip:
-          type: string
-          example: 037833100
-
-    PolicyIncomeResponse:
-      type: object
-      properties:
-        messageStatus:
-            $ref: '#/components/schemas/MessageStatus'      
-        policyIncome:
-            $ref: '#/components/schemas/PolicyIncome'  
-       
-    MessageStatus:
-      type: object
-      properties:
-        type:
-          type: string
-          example: OK      
-        code:
-          type: string
-          example: 200
-        description:
-          type: string
-          example: Retrieved replacement successfully           
-
-    PolicyIncome:
-      type: object
-      properties:
-        policyNumber:
-          type: string
-          example: 241235566
+          $ref: '#/components/schemas/policyNumber'
         isIncomeRiderActivated:
           type: boolean
-          example: True
         lastPaymentDate:
           type: string
-          example:  2024-03-11          
+          format: date
+          examples: 
+            - "2024-03-11"
         netPaymentAmount:
-          type: integer
-          example: 5000.00
+          type: number
+          format: float
+          examples: 
+            - 5000.00
         grossPaymentAmount:
-          type: integer
-          example: 2500.00
+          type: number
+          format: float
+          examples: 
+            - 2500.00
         paymentsPerYear:
           type: integer
-          example: 24
+          minimum: 1
+          maximum: 365
+          examples: 
+            - 24
         cusip:
           type: string
-          example: 037833100
+          examples: 
+            - "037833100"
         incomeType:
           type: string
-          example: IncomeRiders
-
-  securitySchemes:
-    policiesIncomeAuth:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: "TBD"
-          scopes:
-            policyIncomeRead: Read Policy Income Data
+          enum:
+            - annuitized
+            - incomeRiders
+            - scheduledPayments
+            - rmd
