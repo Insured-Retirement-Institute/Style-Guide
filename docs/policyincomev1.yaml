@@ -3,10 +3,6 @@ info:
   title: Annuity Policy Income Activation APIs
   version: "1.0.0"
   description: APIs for managing income activation of policies
-  contact:
-    name: Katherine Dease
-    email: kdease@irionline.org
-
 paths:
   /v1/policies/{policyNumber}/income-activation:      
     get:
