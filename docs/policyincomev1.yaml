@@ -8,7 +8,7 @@ info:
     email: kdease@irionline.org
 
 paths:
-  /v1/policies/{policyNumber}/incomeActivation:      
+  /v1/policies/{policyNumber}/income-activation:      
     get:
       operationId: getPolicyIncomeActivationByPolicyNumber
       summary: Get Policy Income Activation By PolicyNumber.
@@ -79,7 +79,7 @@ components:
       required: [policyNumber, isIncomeRiderActivated]
       properties:
         policyNumber:
-          $ref: '#/components/schemas/cusip'
+          $ref: '#/components/schemas/policyNumber'
         isIncomeRiderActivated:
           type: boolean
         lastPaymentDate:
