@@ -19,10 +19,53 @@ Regular Expressions
 - There is no single universally adopted regex "standard," but Perl-Compatible Regular Expressions (PCRE) is the most widely supported and influential standard
 
 Response Body Standards
-  - Response object should contain the resource or collection only (additional metadata should be in the response header (eg. correlationId)
+  - Response object body must only contain the resource or collection of resources that were requested (error responses are an exception to this rule.)
+    - Additional response metadata should be in the response header (eg. correlationId)
   - The response body should __BE__ the resource or array rather than an object that contains a named object or array that contains the data:
-    - {attr1: val1, attr2:val2,... } rather than {"objName": {attr1: val1,...}}
-    - [{attr1: val1, attr2, val2,...},{attr1:val3, attr2, val4,...},...] rather than { "arrayName": [{attr1:val3, attr2, val4},...]}
+  - '''
+    {
+      "attr1": "val1",
+      "attr2": "val2",
+      ...
+    }'''
+    rather than
+   - '''
+    {
+      "objName":
+      {
+        "attr1": "val1",
+        "attr2": "val2",
+        ...
+      }
+    }'''
+    and
+    '''
+    [
+      {
+        "attr1": "val1",
+        "attr2": "val2",
+        ...
+      },
+      {
+        "attr1": "val3",
+        "attr2": "val4",
+        ...
+      },
+      ...
+    ]
+    '''
+    rather than
+    '''
+    {
+      "arrayName": [
+        {
+          "attr1": "val3",
+          "attr2": "val4"
+        },
+    ...
+      ]
+    }
+    '''
 
 Data definitions  
 - **_policyNumber_** is the term used to describe the unique identifier of the policy.
