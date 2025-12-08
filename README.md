@@ -71,6 +71,7 @@ Response Body Standards
     }
   </code>
 </details>
+
 Data definitions  
 - **_policyNumber_** is the term used to describe the unique identifier of the policy.
 - **_producer_** is the preferred nomenclature when referring to licensed/appointed professional or firm selling products.
