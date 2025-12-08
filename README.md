@@ -21,7 +21,9 @@ Regular Expressions
 Response Body Standards
   - Response object body must only contain the resource or collection of resources that were requested (error responses are an exception to this rule.)
     - Additional response metadata should be in the response header (eg. correlationId)
-  - The response body should __BE__ the resource or array rather than an object that contains a named object or array that contains the data:
+  - The response body should __BE__ the resource or array rather than an object that contains a named object or array that contains the data.
+  <details>
+    <summary>Examples</summary>
   ```
     {
       "attr1": "val1",
@@ -68,7 +70,7 @@ Response Body Standards
       ]
     }
   ```
-
+</details>
 Data definitions  
 - **_policyNumber_** is the term used to describe the unique identifier of the policy.
 - **_producer_** is the preferred nomenclature when referring to licensed/appointed professional or firm selling products.
