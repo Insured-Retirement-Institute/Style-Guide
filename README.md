@@ -24,15 +24,15 @@ Response Body Standards
   - The response body should __BE__ the resource or array rather than an object that contains a named object or array that contains the data.
   <details>
     <summary>Examples</summary>
-  ```
+    <code>
     {
       "attr1": "val1",
       "attr2": "val2",
       ...
     }
-  ```
+  </code>
     rather than
-  ```
+  <code>
     {
       "objName":
       {
@@ -41,9 +41,9 @@ Response Body Standards
         ...
       }
     }
-  ```
+  </code>
   and
-  ```
+  <code>
     [
       {
         "attr1": "val1",
@@ -57,9 +57,9 @@ Response Body Standards
       },
       ...
     ]
-  ```
+  </code>
     rather than
-  ```
+  <code>
     {
       "arrayName": [
         {
@@ -69,7 +69,7 @@ Response Body Standards
     ...
       ]
     }
-  ```
+  </code>
 </details>
 Data definitions  
 - **_policyNumber_** is the term used to describe the unique identifier of the policy.
