@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Dictionary</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      background-color: #f5f6fa;
+      color: #222;
+    }
+
+    header {
+      background-color: #0c2340;
+      color: #fff;
+      padding: 12px 0;
+      margin-bottom: 16px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px 32px;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .selector-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    select {
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #d0d7e2;
+      font-size: 14px;
+      background-color: #fff;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background-color: #fff;
+      color: #0c2340;
+      border-color: #d0d7e2;
+    }
+
+    .btn:hover {
+      background-color: #f3f4f7;
+    }
+
+    h1 {
+      margin-top: 4px;
+      margin-bottom: 4px;
+      font-size: 24px;
+    }
+
+    .page-description {
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .scroll-hint {
+      font-size: 11px;
+      color: #777;
+      margin-bottom: 6px;
+    }
+
+    .dictionary-wrapper {
+      max-height: calc(100vh - 170px);
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .domain-section {
+      margin-bottom: 24px;
+    }
+
+    .domain-header {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 16px 0 8px;
+      color: #0c2340;
+      border-bottom: 1px solid #d0d7e2;
+      padding-bottom: 4px;
+    }
+
+    .field-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .field-item {
+      background-color: #fff;
+      border-radius: 8px;
+      border: 1px solid #e1e4ea;
+      margin-bottom: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .field-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      cursor: pointer;
+    }
+
+    .field-main {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .field-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .field-domain-label {
+      font-size: 11px;
+      color: #777;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background-color: #edf0f6;
+    }
+
+    .tags {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 11px;
+    }
+
+    .tag {
+      padding: 2px 6px;
+      border-radius: 999px;
+      background-color: #e5edf9;
+      color: #0c2340;
+      font-weight: 500;
+    }
+
+    .tag-deprecated {
+      background-color: #fce8e6;
+      color: #b3261e;
+    }
+
+    .caret {
+      font-size: 16px;
+      color: #555;
+      transition: transform 0.15s ease-out;
+      margin-left: 8px;
+    }
+
+    .field-item.expanded .caret {
+      transform: rotate(90deg);
+    }
+
+    .field-body {
+      border-top: 1px solid #e1e4ea;
+      padding: 10px 12px 12px;
+      display: none;
+    }
+
+    .field-item.expanded .field-body {
+      display: block;
+    }
+
+    .field-definition {
+      font-size: 13px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .field-meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 4px;
+      table-layout: fixed;
+    }
+
+    .field-meta-table th,
+    .field-meta-table td {
+      padding: 6px 8px;
+      border-top: 1px solid #edf0f5;
+      vertical-align: top;
+    }
+
+    .field-meta-table th {
+      width: 140px;
+      text-align: left;
+      color: #555;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .field-meta-table td {
+      color: #333;
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .empty-state {
+      padding: 16px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .loading {
+      padding: 16px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .error {
+      padding: 16px;
+      font-size: 14px;
+      color: #b3261e;
+      background-color: #fce8e6;
+      border-radius: 8px;
+      border: 1px solid #f5c2be;
+    }
+
+    @media (max-width: 600px) {
+      .field-meta-table th {
+        width: 110px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="top-bar">
+        <div class="selector-group">
+          <label for="dictionary-selector">Data Dictionary:</label>
+          <select id="dictionary-selector" onchange="loadSelectedDictionary()">
+            <option value="canonical">Canonical (All Fields)</option>
+            <option value="appstatus">Application Status</option>
+            <option value="policyincome">Policy Income</option>
+          </select>
+        </div>
+        <div>
+          <a href="index.html" class="btn">Back to API Catalog</a>
+          <a href="api-viewer.html" class="btn">View API Docs</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Data Dictionary</h1>
+    <p class="page-description">
+      Fields are grouped by business domain. Click a field to expand details such as data type, patterns, examples, and notes.
+    </p>
+
+    <div class="search-filter-controls">
+      <div class="search-bar">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search by field name, domain, or description..."
+          class="search-input"
+        />
+      </div>
+      <div class="filter-controls">
+        <label>
+          <input type="checkbox" id="filter-required"> Required Only
+        </label>
+        <label>
+          <input type="checkbox" id="filter-deprecated"> Show Deprecated
+        </label>
+        <div class="filter-stats">
+          <span id="filter-stats-text">Showing <strong>0</strong> of <strong>0</strong> fields</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="dictionary-wrapper" class="dictionary-wrapper">
+      <div id="dictionary-content" class="loading">Loading...</div>
+    </div>
+  </main>
+
+  <script>
+    const dictionaryDefinitions = {
+      "canonical": "data-dictionaries/canonical-fields.json",
+      "appstatus": [
+        "data-dictionaries/appstatus/appstatus-header-fields.json",
+        "data-dictionaries/appstatus/appstatus-path-fields.json",
+        "data-dictionaries/appstatus/appstatus-query-fields.json",
+        "data-dictionaries/appstatus/appstatus-policy-summary-fields.json",
+        "data-dictionaries/appstatus/appstatus-policy-fields.json",
+        "data-dictionaries/appstatus/appstatus-cansell-fields.json",
+        "data-dictionaries/appstatus/appstatus-suitability-fields.json",
+        "data-dictionaries/appstatus/appstatus-documents-fields.json",
+        "data-dictionaries/appstatus/appstatus-funding-fields.json",
+        "data-dictionaries/appstatus/appstatus-producer-individual-fields.json",
+        "data-dictionaries/appstatus/appstatus-producer-entity-fields.json",
+        "data-dictionaries/appstatus/appstatus-party-individual-fields.json",
+        "data-dictionaries/appstatus/appstatus-party-entity-fields.json",
+        "data-dictionaries/appstatus/appstatus-detail-fields.json",
+        "data-dictionaries/appstatus/appstatus-search-request-fields.json",
+        "data-dictionaries/appstatus/appstatus-search-response-fields.json",
+        "data-dictionaries/appstatus/appstatus-paging-fields.json"
+      ],
+      "policyincome": "data-dictionaries/policyincome-fields.json"
+    };
+
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    function normalizeKeyFromApiParam(apiParam) {
+      if (!apiParam) return "canonical";
+      return apiParam.replace(/\.ya?ml$/i, "");
+    }
+
+    function toggleField(itemEl) {
+      itemEl.classList.toggle("expanded");
+    }
+
+    function renderFieldItem(field, index) {
+      const status = (field.status || "").toLowerCase();
+      const hasNotes = field.notes && String(field.notes).trim().length > 0;
+      const examples = Array.isArray(field.examples)
+        ? field.examples.join(", ")
+        : (field.examples || "");
+
+      let statusTag = "";
+      if (status === "deprecated") {
+        statusTag = '<span class="tag tag-deprecated">Deprecated</span>';
+      } else if (status && status !== "active") {
+        statusTag = '<span class="tag">' + field.status + "</span>";
+      }
+
+      return `
+<li class="field-item" data-index="${index}">
+  <div class="field-header" onclick="toggleField(this.parentElement)">
+    <div class="field-main">
+      <div class="field-name">${field.displayName || field.fieldName}</div>
+      ${
+        field.domain
+          ? `<span class="field-domain-label">${field.domain}</span>`
+          : ""
+      }
+    </div>
+    <div class="tags">
+      ${statusTag}
+      <span class="caret">▶</span>
+    </div>
+  </div>
+  <div class="field-body">
+    <table class="field-meta-table">
+      <tr>
+        <th>Field Name</th>
+        <td>${field.fieldName || ""}</td>
+      </tr>
+      <tr>
+        <th>Domain</th>
+        <td>${field.domain || ""}</td>
+      </tr>
+      <tr>
+        <th>Data Type</th>
+        <td>${field.type || ""}</td>
+      </tr>
+      <tr>
+        <th>Required</th>
+        <td>
+          ${field.required ? '<span class="tag tag-required">Yes</span>' : 'No'}
+          ${field.apiRequired !== undefined && field.apiRequired !== field.required ?
+            ` <span class="tag tag-info">API: ${field.apiRequired ? 'Yes' : 'No'}</span>` : ''}
+        </td>
+      </tr>
+      ${field.location ? `<tr>
+        <th>Location</th>
+        <td><span class="pill pill-location">${field.location}</span></td>
+      </tr>` : ''}
+      <tr>
+        <th>Allowed Values</th>
+        <td>${field.allowedValues || ""}</td>
+      </tr>
+      <tr>
+        <th>Pattern</th>
+        <td>${field.pattern || ""}</td>
+      </tr>
+      <tr>
+        <th>Length / Range</th>
+        <td>
+          ${
+            field.minLength != null || field.maxLength != null
+              ? "Length: " + (field.minLength ?? "") + " – " + (field.maxLength ?? "") + "<br/>"
+              : ""
+          }
+          ${
+            field.minValue != null || field.maxValue != null
+              ? "Value: " + (field.minValue ?? "") + " – " + (field.maxValue ?? "")
+              : ""
+          }
+        </td>
+      </tr>
+      <tr>
+        <th>Examples</th>
+        <td>${examples}</td>
+      </tr>
+      <tr>
+        <th>Owner</th>
+        <td>${field.owner || ""}</td>
+      </tr>
+      <tr>
+        <th>Status</th>
+        <td>${field.status || ""}</td>
+      </tr>
+      <tr>
+        <th>Notes</th>
+        <td>${hasNotes ? field.notes : ""}</td>
+      </tr>
+    </table>
+  </div>
+</li>`;
+    }
+
+    function renderDictionary(fields) {
+      if (!fields || fields.length === 0) {
+        return '<div class="empty-state">No fields found for this selection.</div>';
+      }
+
+      // Group by domain
+      const groups = {};
+      fields.forEach(field => {
+        const domain = (field.domain && field.domain.trim()) || "Uncategorized";
+        if (!groups[domain]) {
+          groups[domain] = [];
+        }
+        groups[domain].push(field);
+      });
+
+      const sortedDomains = Object.keys(groups).sort((a, b) =>
+        a.localeCompare(b)
+      );
+
+      let html = "";
+      sortedDomains.forEach(domain => {
+        const fieldsInDomain = groups[domain].slice().sort((a, b) =>
+          (a.fieldName || "").localeCompare(b.fieldName || "")
+        );
+
+        html += `
+          <section class="domain-section">
+            <div class="domain-header">${domain}</div>
+            <ul class="field-list">
+              ${fieldsInDomain.map((f, idx) => renderFieldItem(f, idx)).join("")}
+            </ul>
+          </section>
+        `;
+      });
+
+      return html;
+    }
+
+    // Global state for search and filtering
+    let allFields = [];
+    let filteredFields = [];
+
+    async function loadDictionaryFiles(paths) {
+      // If single file (string), load it
+      if (typeof paths === 'string') {
+        const response = await fetch(paths);
+        if (!response.ok) {
+          throw new Error(`Failed to load ${paths}`);
+        }
+        return await response.json();
+      }
+
+      // If multiple files (array), load in parallel and merge
+      const promises = paths.map(path =>
+        fetch(path).then(r => {
+          if (!r.ok) throw new Error(`Failed to load ${path}`);
+          return r.json();
+        })
+      );
+
+      const results = await Promise.all(promises);
+      return results.flat(); // Flatten array of arrays
+    }
+
+    async function loadSelectedDictionary() {
+      const select = document.getElementById("dictionary-selector");
+      const key = select.value;
+      const paths = dictionaryDefinitions[key];
+      const contentEl = document.getElementById("dictionary-content");
+
+      if (!paths) {
+        contentEl.innerHTML = '<div class="empty-state">No dictionary configured for this selection.</div>';
+        return;
+      }
+
+      try {
+        contentEl.innerHTML = '<div class="loading">Loading...</div>';
+        const data = await loadDictionaryFiles(paths);
+        allFields = data; // Store for search/filter
+        filteredFields = data;
+        contentEl.innerHTML = renderDictionary(data);
+        updateFilterStats();
+      } catch (e) {
+        contentEl.innerHTML = '<div class="error">Error loading data dictionary: ' + e.message + "</div>";
+        console.error(e);
+      }
+    }
+
+    function applySearchAndFilters() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const showRequiredOnly = document.getElementById('filter-required').checked;
+      const showDeprecated = document.getElementById('filter-deprecated').checked;
+
+      filteredFields = allFields.filter(field => {
+        // Search filter
+        const matchesSearch = !searchTerm ||
+          (field.fieldName || '').toLowerCase().includes(searchTerm) ||
+          (field.displayName || '').toLowerCase().includes(searchTerm) ||
+          (field.domain || '').toLowerCase().includes(searchTerm) ||
+          (field.definition || '').toLowerCase().includes(searchTerm);
+
+        // Required filter
+        const matchesRequired = !showRequiredOnly || field.required === true;
+
+        // Deprecated filter
+        const matchesDeprecated = showDeprecated ||
+          (field.status || '').toLowerCase() !== 'deprecated';
+
+        return matchesSearch && matchesRequired && matchesDeprecated;
+      });
+
+      const contentEl = document.getElementById("dictionary-content");
+      contentEl.innerHTML = renderDictionary(filteredFields);
+      updateFilterStats();
+    }
+
+    function updateFilterStats() {
+      const statsEl = document.getElementById('filter-stats-text');
+      if (statsEl) {
+        statsEl.innerHTML = `Showing <strong>${filteredFields.length}</strong> of <strong>${allFields.length}</strong> fields`;
+      }
+    }
+
+    // Debounced search for performance
+    let searchDebounceTimer;
+    function initSearchAndFilters() {
+      const searchInput = document.getElementById('search-input');
+      const filterRequired = document.getElementById('filter-required');
+      const filterDeprecated = document.getElementById('filter-deprecated');
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          clearTimeout(searchDebounceTimer);
+          searchDebounceTimer = setTimeout(applySearchAndFilters, 300);
+        });
+      }
+
+      if (filterRequired) {
+        filterRequired.addEventListener('change', applySearchAndFilters);
+      }
+
+      if (filterDeprecated) {
+        filterDeprecated.addEventListener('change', applySearchAndFilters);
+      }
+    }
+
+    function initSelectorFromQuery() {
+      const apiParam = getQueryParam("api");
+      const key = normalizeKeyFromApiParam(apiParam);
+      const select = document.getElementById("dictionary-selector");
+      if (dictionaryDefinitions[key]) {
+        select.value = key;
+      }
+    }
+
+    window.addEventListener("load", () => {
+      initSelectorFromQuery();
+      initSearchAndFilters();
+      loadSelectedDictionary();
+      document.getElementById("dictionary-selector").addEventListener("change", loadSelectedDictionary);
+    });
+  </script>
+</body>
+</html>
