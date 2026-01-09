@@ -1,0 +1,22 @@
+[
+  {
+    "fieldName": "policyNumber",
+    "displayName": "Policy Number",
+    "domain": "Routing",
+    "definition": "Required path parameter for the policy number to be retrieved. This is only required on requests that only return one policy number",
+    "type": "string",
+    "required": true,
+    "apiRequired": true,
+    "location": "path",
+    "allowedValues": "",
+    "pattern": "1-30 characters",
+    "minLength": 1,
+    "maxLength": 30,
+    "minValue": null,
+    "maxValue": null,
+    "examples": [],
+    "notes": "",
+    "owner": "Integration Platform",
+    "status": "active"
+  }
+]
