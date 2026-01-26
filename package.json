@@ -1,0 +1,23 @@
+{
+  "name": "iri-style-guide",
+  "version": "1.0.0",
+  "description": "IRI Style Guide with Data Dictionary Generator",
+  "type": "module",
+  "scripts": {
+    "build:dictionary": "tsx scripts/generate-dictionary.ts",
+    "build": "npm run build:dictionary"
+  },
+  "keywords": [
+    "openapi",
+    "data-dictionary",
+    "api-documentation"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "^10.1.0",
+    "@types/node": "^20.10.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0",
+    "xlsx": "^0.18.5"
+  }
+}

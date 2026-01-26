@@ -398,3 +398,14 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Data Dictionary Generator outputs (generated at build time)
+public/data-dictionary.json
+public/data-dictionary.xlsx
+public/index.html
+
+# npm
+package-lock.json
+
+# TypeScript build outputs
+dist/
