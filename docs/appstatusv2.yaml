@@ -1,7 +1,8 @@
 openapi: 3.1.0
 info:
   title: Annuity Application Status APIs
-  description: APIs for managing Annuity application data including application status, details, transmission, agents, parties, funding, documents, and more.
+  description: APIs for managing Annuity application data including application status,
+    details, transmission, agents, parties, funding, documents, and more.
   version: 2.0.0
   license:
     name: MIT
@@ -13,59 +14,59 @@ paths:
       summary: Search for summary application statuses
       description: Retrieve summary application statuses based on search criteria.
       tags:
-        - Application Status
+      - Application Status
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/finishedCutoffDays'
-        - $ref: '#/components/parameters/orderBy'
-        - $ref: '#/components/parameters/sortOrder'
-        - $ref: '#/components/parameters/start'
-        - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/finishedCutoffDays'
+      - $ref: '#/components/parameters/orderBy'
+      - $ref: '#/components/parameters/sortOrder'
+      - $ref: '#/components/parameters/start'
+      - $ref: '#/components/parameters/limit'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/SearchSummaryApplicationStatusesRequest'
       responses:
-        "200":
+        '200':
           description: Policy application statuses successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SummaryApplicationStatusesPagedResult"
-        "401":
+                $ref: '#/components/schemas/SummaryApplicationStatusesPagedResult'
+        '401':
           description: Unauthorized
   /v2/application-statuses:
     get:
       operationId: getApplicationStatuses
-      summary: Retrieve summary application statuses 
+      summary: Retrieve summary application statuses
       description: Retrieve all summary application statuses.
       tags:
-        - Application Status
+      - Application Status
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/associatedFirmId'
-        - $ref: '#/components/parameters/cusip'
-        - $ref: '#/components/parameters/producerNumber'
-        - $ref: '#/components/parameters/npn'
-        - $ref: '#/components/parameters/crdNumber'
-        - $ref: '#/components/parameters/applicationOriginId'
-        - $ref: '#/components/parameters/trackingNumber'
-        - $ref: '#/components/parameters/finishedCutoffDays'
-        - $ref: '#/components/parameters/orderBy'
-        - $ref: '#/components/parameters/sortOrder'
-        - $ref: '#/components/parameters/start'
-        - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/associatedFirmId'
+      - $ref: '#/components/parameters/cusip'
+      - $ref: '#/components/parameters/producerNumber'
+      - $ref: '#/components/parameters/npn'
+      - $ref: '#/components/parameters/crdNumber'
+      - $ref: '#/components/parameters/applicationOriginId'
+      - $ref: '#/components/parameters/trackingNumber'
+      - $ref: '#/components/parameters/finishedCutoffDays'
+      - $ref: '#/components/parameters/orderBy'
+      - $ref: '#/components/parameters/sortOrder'
+      - $ref: '#/components/parameters/start'
+      - $ref: '#/components/parameters/limit'
       responses:
-        "200":
+        '200':
           description: Policy application statuses successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SummaryApplicationStatusesPagedResult"
-        "401":
+                $ref: '#/components/schemas/SummaryApplicationStatusesPagedResult'
+        '401':
           description: Unauthorized
   /v2/application-statuses/{policyNumber}:
     get:
@@ -73,24 +74,24 @@ paths:
       summary: Retrieve application status
       description: Retrieve application status for a policy with complete status details.
       tags:
-        - Application Status
+      - Application Status
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumber'
-        - $ref: '#/components/parameters/associatedFirmId'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/policyNumber'
+      - $ref: '#/components/parameters/associatedFirmId'
       responses:
-        "200":
+        '200':
           description: Policy application status successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DetailApplicationStatus"
-        "401":
+                $ref: '#/components/schemas/DetailApplicationStatus'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: NotFound
   /v2/application-statuses/policies:
     get:
@@ -98,57 +99,58 @@ paths:
       summary: Retrieve policies
       description: Retrieve all policies.
       tags:
-        - Policy
+      - Policy
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/associatedFirmId'
-        - $ref: '#/components/parameters/cusip'
-        - $ref: '#/components/parameters/producerNumber'
-        - $ref: '#/components/parameters/npn'
-        - $ref: '#/components/parameters/crdNumber'
-        - $ref: '#/components/parameters/applicationOriginId'
-        - $ref: '#/components/parameters/trackingNumber'
-        - $ref: '#/components/parameters/finishedCutoffDays'
-        - $ref: '#/components/parameters/orderBy'
-        - $ref: '#/components/parameters/sortOrder'
-        - $ref: '#/components/parameters/start'
-        - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/associatedFirmId'
+      - $ref: '#/components/parameters/cusip'
+      - $ref: '#/components/parameters/producerNumber'
+      - $ref: '#/components/parameters/npn'
+      - $ref: '#/components/parameters/crdNumber'
+      - $ref: '#/components/parameters/applicationOriginId'
+      - $ref: '#/components/parameters/trackingNumber'
+      - $ref: '#/components/parameters/finishedCutoffDays'
+      - $ref: '#/components/parameters/orderBy'
+      - $ref: '#/components/parameters/sortOrder'
+      - $ref: '#/components/parameters/start'
+      - $ref: '#/components/parameters/limit'
       responses:
-        "200":
+        '200':
           description: Policies successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PoliciesPagedResult"
-        "401":
+                $ref: '#/components/schemas/PoliciesPagedResult'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
   /v2/application-statuses/policies/{policyNumber}:
     get:
       operationId: getPolicyByPolicyNumber
       summary: Retrieve a policy
-      description: Retrieve summary application-status of a policy without the details of the statuses of each activity associated with the application
+      description: Retrieve summary application-status of a policy without the details
+        of the statuses of each activity associated with the application
       tags:
-        - Policy
+      - Policy
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumber'
-        - $ref: '#/components/parameters/associatedFirmId'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/policyNumber'
+      - $ref: '#/components/parameters/associatedFirmId'
       responses:
-        "200":
+        '200':
           description: Policy successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Policy"
-        "401":
+                $ref: '#/components/schemas/Policy'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: NotFound
   /v2/application-statuses/policies/{policyNumber}/fundings:
     get:
@@ -156,24 +158,24 @@ paths:
       summary: Retrieve policy funding data
       description: Retrieve funding data of a policy.
       tags:
-        - Policy
+      - Policy
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumber'
-        - $ref: '#/components/parameters/associatedFirmId'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/policyNumber'
+      - $ref: '#/components/parameters/associatedFirmId'
       responses:
-        "200":
+        '200':
           description: Policy funding successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Funding"
-        "401":
+                $ref: '#/components/schemas/Funding'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: NotFound
   /v2/application-statuses/policies/{policyNumber}/document-reviews:
     get:
@@ -181,24 +183,24 @@ paths:
       summary: Retrieve policy document review data
       description: Retrieve document review data of a policy.
       tags:
-        - Policy
+      - Policy
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumber'
-        - $ref: '#/components/parameters/associatedFirmId'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/policyNumber'
+      - $ref: '#/components/parameters/associatedFirmId'
       responses:
-        "200":
+        '200':
           description: Policy document review successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DocumentReview"
-        "401":
+                $ref: '#/components/schemas/DocumentReview'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: NotFound
   /v2/application-statuses/policies/{policyNumber}/suitability:
     get:
@@ -206,24 +208,24 @@ paths:
       summary: Retrieve policy suitability data
       description: Retrieve suitability data of a policy.
       tags:
-        - Policy
+      - Policy
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumber'
-        - $ref: '#/components/parameters/associatedFirmId'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/policyNumber'
+      - $ref: '#/components/parameters/associatedFirmId'
       responses:
-        "200":
+        '200':
           description: Policy suitability successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Suitability"
-        "401":
+                $ref: '#/components/schemas/Suitability'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: NotFound
   /v2/application-statuses/policies/{policyNumber}/can-sell-validations:
     get:
@@ -231,30 +233,31 @@ paths:
       summary: Retrieve policy can sell validation data
       description: Retrieve can sell valiation data of a policy.
       tags:
-        - Policy
+      - Policy
       parameters:
-        - $ref: '#/components/parameters/correlationId'
-        - $ref: '#/components/parameters/brokerNumber'
-        - $ref: '#/components/parameters/policyNumber'
-        - $ref: '#/components/parameters/associatedFirmId'
+      - $ref: '#/components/parameters/correlationId'
+      - $ref: '#/components/parameters/brokerNumber'
+      - $ref: '#/components/parameters/policyNumber'
+      - $ref: '#/components/parameters/associatedFirmId'
       responses:
-        "200":
+        '200':
           description: Policy can sell validation successfully retrieved
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CanSellValidation"
-        "401":
+                $ref: '#/components/schemas/CanSellValidation'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: NotFound
 components:
   parameters:
     correlationId:
       name: correlationId
-      description: Optional custom header to be returned to the caller in response payload
+      description: Optional custom header to be returned to the caller in response
+        payload
       in: header
       required: false
       schema:
@@ -309,7 +312,8 @@ components:
         maxLength: 10
     crdNumber:
       name: crdNumber
-      description: Optional query parameter for the Central Registration Depository number
+      description: Optional query parameter for the Central Registration Depository
+        number
       in: query
       required: false
       schema:
@@ -331,7 +335,8 @@ components:
         type: string
     finishedCutoffDays:
       name: finishedCutoffDays
-      description: Optional query parameter for when a completed or cancelled policy is to drop off
+      description: Optional query parameter for when a completed or cancelled policy
+        is to drop off
       in: query
       required: false
       schema:
@@ -344,7 +349,10 @@ components:
       required: false
       schema:
         type: string
-        enum: [policyNumber, status, statusDate]
+        enum:
+        - policyNumber
+        - status
+        - statusDate
         default: statusDate
     sortOrder:
       name: sortOrder
@@ -353,7 +361,9 @@ components:
       required: false
       schema:
         type: string
-        enum: [asc, desc]
+        enum:
+        - asc
+        - desc
         default: desc
     start:
       name: start
@@ -378,114 +388,146 @@ components:
       type: string
       minLength: 9
       maxLength: 9
-      pattern:  ^[0-9]{3}[A-Z0-9]{5}[0-9]$
+      pattern: ^[0-9]{3}[A-Z0-9]{5}[0-9]$
+      description: CUSIP identifier (9-character alphanumeric code).
     IndividualIdentity:
       description: Schema for individual identity data
-      required: [firstName,lastName]
+      required:
+      - firstName
+      - lastName
       type: object
       properties:
         type:
           type: string
           const: individual
+          description: Type of party
+          pattern: individual, entity
         firstName:
           type: string
           minLength: 1
           maxLength: 105
-          pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,105}$
+          pattern: "^[a-zA-Z0-9=()*@#\\s.,'_/~%$!();:&\"\xAE`\\-\\\\?\"]{1,105}$"
+          description: "The party\u2019s legal first name as registered with the carrier\
+            \ or licensing authorities."
         middleName:
           type: string
           minLength: 1
           maxLength: 105
-          pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,105}$
+          pattern: "^[a-zA-Z0-9=()*@#\\s.,'_/~%$!();:&\"\xAE`\\-\\\\?\"]{1,105}$"
+          description: "The producer\u2019s legal middle name."
         lastName:
           type: string
           minLength: 1
           maxLength: 105
-          pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,105}$
+          pattern: "^[a-zA-Z0-9=()*@#\\s.,'_/~%$!();:&\"\xAE`\\-\\\\?\"]{1,105}$"
+          description: "The party\u2019s legal last name as registered with the carrier\
+            \ or licensing authorities."
         taxId:
           type: string
           maxLength: 9
+          description: "Party\u2019s tax identification number"
+          pattern: 'length: 9'
     IndividualProducer:
       description: Schema for individual producer data
       type: object
-      required: [relationships]
+      required:
+      - relationships
       allOf:
-        - $ref: "#/components/schemas/IndividualIdentity"
-        - type: object
-          properties:
-            npn:
+      - $ref: '#/components/schemas/IndividualIdentity'
+      - type: object
+        properties:
+          npn:
+            type: string
+            maxLength: 10
+            description: National Producer Number assigned to the entity, if applicable,
+              for tracking licensing and appointments.
+          crdNumber:
+            type: string
+            maxLength: 10
+            description: Central Registration Depository (CRD) number assigned to
+              the individual, typically used for registered representatives.
+          relationships:
+            type: array
+            minItems: 1
+            maxItems: 30
+            items:
               type: string
-              maxLength: 10
-            crdNumber:
-              type: string
-              maxLength: 10
-            relationships:
-              type: array
-              minItems: 1
-              maxItems: 30
-              items:
-                type: string
-                enum:
-                  - primaryAgent
-                  - secondaryAgent
-                  - additionalAgent
-                  - investmentAdvisorRepresentative
+              enum:
+              - primaryAgent
+              - secondaryAgent
+              - additionalAgent
+              - investmentAdvisorRepresentative
+            description: Relationship(s) this producer has to the policy
     IndividualParty:
       description: Schema for individual party data
       type: object
       allOf:
-        - $ref: "#/components/schemas/IndividualIdentity"
-        - $ref: "#/components/schemas/PartyRelationship"
+      - $ref: '#/components/schemas/IndividualIdentity'
+      - $ref: '#/components/schemas/PartyRelationship'
     EntityIdentity:
       description: Schema for entity identity data
       type: object
-      required: [type, name]
+      required:
+      - type
+      - name
       properties:
         type:
           type: string
           const: entity
+          description: Type of party
+          pattern: individual, entity
         name:
           type: string
           minLength: 1
           maxLength: 180
-          pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,180}$
+          pattern: "^[a-zA-Z0-9=()*@#\\s.,'_/~%$!();:&\"\xAE`\\-\\\\?\"]{1,180}$"
+          description: Entity name
         taxId:
           type: string
+          description: "Party\u2019s tax identification number"
+          pattern: 'length: 9'
     EntityProducer:
       description: Schema for entity producer data
       type: object
-      required: [relationships]
+      required:
+      - relationships
       allOf:
-        - $ref: "#/components/schemas/EntityIdentity"
-        - type: object
-          properties:
-            npn:
+      - $ref: '#/components/schemas/EntityIdentity'
+      - type: object
+        properties:
+          npn:
+            type: string
+            maxLength: 10
+            description: National Producer Number assigned to the entity, if applicable,
+              for tracking licensing and appointments.
+          crdNumber:
+            type: string
+            maxLength: 10
+            description: Central Registration Depository (CRD) number assigned to
+              the individual, typically used for registered representatives.
+          relationships:
+            type: array
+            minItems: 1
+            maxItems: 25
+            items:
               type: string
-              maxLength: 10
-            crdNumber:
-              type: string
-              maxLength: 10
-            relationships:
-              type: array
-              minItems: 1
-              maxItems: 25
-              items:
-                type: string
-                enum:
-                  - brokerageGeneralAgency
-                  - registeredInvestmentAdvisoryFirm
-                  - independentMarketingOrganization
-                  - brokerDealer
+              enum:
+              - brokerageGeneralAgency
+              - registeredInvestmentAdvisoryFirm
+              - independentMarketingOrganization
+              - brokerDealer
+            description: Relationship(s) this producer has to the policy
     EntityParty:
       description: Schema for entity party data
       type: object
       allOf:
-        - $ref: "#/components/schemas/EntityIdentity"
-        - $ref: "#/components/schemas/PartyRelationship"
+      - $ref: '#/components/schemas/EntityIdentity'
+      - $ref: '#/components/schemas/PartyRelationship'
     PartyRelationship:
       description: Schema for party relationship data
       type: object
-      required: [relationships]
+      required:
+      - relationships
       properties:
         relationships:
           type: array
@@ -494,130 +536,226 @@ components:
           items:
             type: string
             enum:
-              - owner
-              - jointOwner
-              - annuitant
-              - jointAnnuitant
-              - primaryBeneficiary
-              - contingentBeneficiary
+            - owner
+            - jointOwner
+            - annuitant
+            - jointAnnuitant
+            - primaryBeneficiary
+            - contingentBeneficiary
+          description: Relationship(s) this party has to the policy
     Producers:
       description: Schema for producers data
       type: array
       items:
         anyOf:
-          - $ref: "#/components/schemas/IndividualProducer"
-          - $ref: "#/components/schemas/EntityProducer"
-    Parties:  
+        - $ref: '#/components/schemas/IndividualProducer'
+        - $ref: '#/components/schemas/EntityProducer'
+    Parties:
       description: Schema for parties data
       type: array
       minItems: 1
       items:
         anyOf:
-          - $ref: "#/components/schemas/IndividualParty"
-          - $ref: "#/components/schemas/EntityParty"
+        - $ref: '#/components/schemas/IndividualParty'
+        - $ref: '#/components/schemas/EntityParty'
     CanSellValidation:
       description: Schema for policy can sell validation data
       type: object
-      required: [status,isActionNeeded]
+      required:
+      - status
+      - isActionNeeded
       properties:
         status:
           type: string
-          enum: [awaitingReview, inProgress, completed]
+          enum:
+          - awaitingReview
+          - inProgress
+          - completed
+          description: "Indicates the current state of the suitability review for\
+            \ the application. Represents where the application is in the suitability\
+            \ workflow\u2014waiting to be reviewed, actively under evaluation, completed,\
+            \ or deemed not applicable based on product type or state requirements."
         isActionNeeded:
           type: boolean
+          description: Flags whether any action is required before the document review
+            can continue or be finalized. May indicate missing pages, clarification
+            required, or forms that need corrections.
         startDate:
           type: string
           format: date
+          description: The date the CanSell validation process began or was first
+            triggered. Useful for process tracking and measuring review duration.
+          pattern: yyyy-mm-dd
         endDate:
           type: string
           format: date
+          description: The date the CanSell validation process was completed or closed.
+            Populated when the validation reaches a final state.
+          pattern: yyyy-mm-dd
         note:
           type: string
           minLength: 1
           maxLength: 2000
+          description: Additional context, comments, or carrier-provided details about
+            the CanSell review. Intended for free-form explanations that do not fit
+            into the structured fields.
+          pattern: 1-2000 characters
         issues:
           type: array
           items:
             type: object
-            required: [type]
+            required:
+            - type
             properties:
               type:
                 type: string
                 enum:
-                  - trainingIncompleteMissing
-                  - trainingExpired
-                  - agentNotAppointedForSale
-                  - jitAppointmentInProgress
-                  - agentNotLicensed
-                  - other
+                - trainingIncompleteMissing
+                - trainingExpired
+                - agentNotAppointedForSale
+                - jitAppointmentInProgress
+                - agentNotLicensed
+                - other
+                description: Categorizes the issue discovered during validation. Used
+                  to standardize issue tracking and allow automated resolution or
+                  routing. Required for any issue object.
+                pattern: Constant with the value of individual
               note:
                 type: string
                 minLength: 1
                 maxLength: 2000
+                description: Free-form explanation providing additional details about
+                  the issue, such as what is missing, why it failed, or steps required
+                  to resolve it.
+                pattern: 1-2000 characters
               affectedProducer:
                 type: object
                 properties:
                   npn:
                     type: string
                     maxLength: 10
+                    description: The National Producer Number (NPN) for the producer
+                      affected by the issue. Included when issues relate to a specific
+                      individual producer rather than the application as a whole.
                   crdNumber:
                     type: string
                     maxLength: 10
+                    description: Central Registration Depository (CRD) number assigned
+                      to the individual, typically used for registered representatives.
                   taxId:
                     type: string
                     maxLength: 9
+                    description: The tax identification number of the affected producer,
+                      used when the issue pertains to identity or licensing validation
+                      tied to tax ID records.
+                    pattern: 'length: 9'
+          description: A list of specific issues identified during the CanSell validation
+            review that must be resolved before the producer is considered eligible
+            to sell. Each object in the array represents one issue.
     Suitability:
       description: Schema for policy suitability data
       type: object
-      required: [status,isActionNeeded]
+      required:
+      - status
+      - isActionNeeded
       properties:
         status:
           type: string
-          enum: [awaitingReview, inProgress, completed, notApplicable]
+          enum:
+          - awaitingReview
+          - inProgress
+          - completed
+          - notApplicable
+          description: "Indicates the current state of the suitability review for\
+            \ the application. Represents where the application is in the suitability\
+            \ workflow\u2014waiting to be reviewed, actively under evaluation, completed,\
+            \ or deemed not applicable based on product type or state requirements."
         isActionNeeded:
           type: boolean
+          description: Flags whether any action is required before the document review
+            can continue or be finalized. May indicate missing pages, clarification
+            required, or forms that need corrections.
         startDate:
           type: string
           format: date
+          description: The date the CanSell validation process began or was first
+            triggered. Useful for process tracking and measuring review duration.
+          pattern: yyyy-mm-dd
         endDate:
           type: string
           format: date
+          description: The date the CanSell validation process was completed or closed.
+            Populated when the validation reaches a final state.
+          pattern: yyyy-mm-dd
         reason:
           type: string
           enum:
-            - moreInformationNeeded
-            - notSuitableForClient
-            - other
+          - moreInformationNeeded
+          - notSuitableForClient
+          - other
+          description: Provides a standardized reason when additional information
+            is requested or when the application is determined to be unsuitable. Used
+            to help categorize outcomes that are not straightforward approvals.
         note:
           type: string
           minLength: 1
           maxLength: 2000
+          description: Additional context, comments, or carrier-provided details about
+            the CanSell review. Intended for free-form explanations that do not fit
+            into the structured fields.
+          pattern: 1-2000 characters
         dueDate:
           type: string
           format: date
+          description: The date by which outstanding requirements or additional information
+            must be provided to continue or complete the suitability review.
+          pattern: yyyy-mm-dd
         isApproved:
-          description: If status is completed, this field denotes whether suitability was approved or declined
+          description: If status is completed, this field denotes whether suitability
+            was approved or declined
           type: boolean
     DocumentReview:
       description: Schema for policy document review data
       type: object
-      required: [status,isActionNeeded]
+      required:
+      - status
+      - isActionNeeded
       properties:
         status:
           type: string
-          enum: [awaitingReview, inProgress, completed]
+          enum:
+          - awaitingReview
+          - inProgress
+          - completed
+          description: "Indicates the current state of the suitability review for\
+            \ the application. Represents where the application is in the suitability\
+            \ workflow\u2014waiting to be reviewed, actively under evaluation, completed,\
+            \ or deemed not applicable based on product type or state requirements."
         isActionNeeded:
           type: boolean
+          description: Flags whether any action is required before the document review
+            can continue or be finalized. May indicate missing pages, clarification
+            required, or forms that need corrections.
         startDate:
           type: string
           format: date
+          description: The date the CanSell validation process began or was first
+            triggered. Useful for process tracking and measuring review duration.
+          pattern: yyyy-mm-dd
         endDate:
           type: string
           format: date
+          description: The date the CanSell validation process was completed or closed.
+            Populated when the validation reaches a final state.
+          pattern: yyyy-mm-dd
         note:
           type: string
           minLength: 1
           maxLength: 2000
+          description: Additional context, comments, or carrier-provided details about
+            the CanSell review. Intended for free-form explanations that do not fit
+            into the structured fields.
+          pattern: 1-2000 characters
         issues:
           type: array
           items:
@@ -626,170 +764,296 @@ components:
               reason:
                 type: string
                 enum:
-                  - applicationIssue
-                  - contactCarrier
-                  - incompleteForm
-                  - missingForm
-                  - missingSignature
-                  - needClarity
-                  - other
+                - applicationIssue
+                - contactCarrier
+                - incompleteForm
+                - missingForm
+                - missingSignature
+                - needClarity
+                - other
+                description: "Categorizes the reason the issue was flagged. Helps\
+                  \ standardize review feedback\u2014for example, identifying missing\
+                  \ signatures or incomplete forms."
               formName:
                 type: string
                 minLength: 1
                 maxLength: 200
+                description: The name of the form associated with the issue. Used
+                  when the issue pertains to a specific document.
+                pattern: 1-200 characters
               formNumber:
                 type: string
                 minLength: 1
                 maxLength: 100
+                description: The identifier or internal number of the form tied to
+                  the issue. Provides additional precision in identifying which form
+                  requires action.
+                pattern: 1-100 characters
               dueDate:
                 type: string
                 format: date
+                description: The date by which outstanding requirements or additional
+                  information must be provided to continue or complete the suitability
+                  review.
+                pattern: yyyy-mm-dd
               note:
                 type: string
                 minLength: 1
                 maxLength: 2000
+                description: Free-form explanation providing additional details about
+                  the issue, such as what is missing, why it failed, or steps required
+                  to resolve it.
+                pattern: 1-2000 characters
+          description: A list of specific issues identified during the CanSell validation
+            review that must be resolved before the producer is considered eligible
+            to sell. Each object in the array represents one issue.
     Funding:
       description: Schema for policy funding data
       type: object
-      required: [isActionNeeded, status]  
+      required:
+      - isActionNeeded
+      - status
       properties:
         startDate:
           type: string
           format: date
+          description: The date the CanSell validation process began or was first
+            triggered. Useful for process tracking and measuring review duration.
+          pattern: yyyy-mm-dd
         endDate:
           type: string
           format: date
+          description: The date the CanSell validation process was completed or closed.
+            Populated when the validation reaches a final state.
+          pattern: yyyy-mm-dd
         isActionNeeded:
           type: boolean
+          description: Flags whether any action is required before the document review
+            can continue or be finalized. May indicate missing pages, clarification
+            required, or forms that need corrections.
         status:
           type: string
-          enum: [awaitingReview, inProgress, completed]
+          enum:
+          - awaitingReview
+          - inProgress
+          - completed
+          description: "Indicates the current state of the suitability review for\
+            \ the application. Represents where the application is in the suitability\
+            \ workflow\u2014waiting to be reviewed, actively under evaluation, completed,\
+            \ or deemed not applicable based on product type or state requirements."
         note:
           type: string
           minLength: 1
           maxLength: 2000
+          description: Additional context, comments, or carrier-provided details about
+            the CanSell review. Intended for free-form explanations that do not fit
+            into the structured fields.
+          pattern: 1-2000 characters
         sources:
           type: array
           items:
             type: object
-            required: [method,type]
+            required:
+            - method
+            - type
             properties:
               method:
                 type: string
                 enum:
-                  - anotherPolicy
-                  - check
-                  - clearinghouse
-                  - creditCard
-                  - debitCard
-                  - digitalPayment
-                  - electronicFundTransfer
-                  - payrollDeduction
-                  - wireTransfer
+                - anotherPolicy
+                - check
+                - clearinghouse
+                - creditCard
+                - debitCard
+                - digitalPayment
+                - electronicFundTransfer
+                - payrollDeduction
+                - wireTransfer
+                description: The method by which the funds are being transferred.
+                  Helps standardize processing and reconciliation.
               type:
                 type: string
                 enum:
-                  - contribution
-                  - directRollover
-                  - employeeContribution
-                  - employerContribution
-                  - full1035Exchange
-                  - indirectRollover
-                  - nonQualifiedTransferOfAssets
-                  - partial1035Exchange
-                  - qualifiedTransfer
+                - contribution
+                - directRollover
+                - employeeContribution
+                - employerContribution
+                - full1035Exchange
+                - indirectRollover
+                - nonQualifiedTransferOfAssets
+                - partial1035Exchange
+                - qualifiedTransfer
+                description: The type of funding transaction, providing context on
+                  whether funds are contributions, rollovers, exchanges, or transfers.
+                pattern: Constant with the value of individual
               isActionNeeded:
                 type: boolean
+                description: Flags whether any action is required before the document
+                  review can continue or be finalized. May indicate missing pages,
+                  clarification required, or forms that need corrections.
               anticipatedAmount:
                 type: number
                 format: float
+                description: The expected amount of funds to be received from this
+                  funding source.
               receivedAmount:
                 type: number
                 format: float
+                description: The actual amount of funds received for this source.
+                  Useful for reconciliation and discrepancy tracking.
               receivedDate:
                 type: string
                 format: date
+                description: Received date of policy
+                pattern: yyyy-mm-dd
               status:
                 type: string
-                enum: [inProgress, complete]
+                enum:
+                - inProgress
+                - complete
+                description: Indicates the status of this funding source within the
+                  funding workflow.
               reason:
                 type: string
                 enum:
-                  - awaitingFundsFromCedingCompany
-                  - contactTheCarrier
-                  - fundingDiscrepancy
-                  - nigoAtCedingCarrier
-                  - noFundsReceivedCash
-                  - pendingReg60
-                  - other
+                - awaitingFundsFromCedingCompany
+                - contactTheCarrier
+                - fundingDiscrepancy
+                - nigoAtCedingCarrier
+                - noFundsReceivedCash
+                - pendingReg60
+                - other
+                description: Provides a standardized reason when additional information
+                  is requested or when the application is determined to be unsuitable.
+                  Used to help categorize outcomes that are not straightforward approvals.
               effectiveDate:
                 type: string
                 format: date
+                description: Effective date of policy
+                pattern: yyyy-mm-dd
               note:
                 type: string
                 minLength: 1
                 maxLength: 2000
+                description: Additional context, comments, or carrier-provided details
+                  about the CanSell review. Intended for free-form explanations that
+                  do not fit into the structured fields.
+                pattern: 1-2000 characters
               cedingCompany:
                 type: object
-                required: [name, accountNumber]
+                required:
+                - name
+                - accountNumber
                 properties:
                   name:
                     type: string
                     minLength: 1
                     maxLength: 180
-                    pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,180}$
+                    pattern: "^[a-zA-Z0-9=()*@#\\s.,'_/~%$!();:&\"\xAE`\\-\\\\?\"\
+                      ]{1,180}$"
+                    description: Name of the ceding company from which funds are being
+                      transferred. Required for transfers involving another insurer
+                      or financial institution.
                   accountNumber:
                     type: string
+                    description: Identifier for the account, policy, or contract at
+                      the ceding company that is the source of funds.
                   startDate:
                     type: string
                     format: date
+                    description: The date the funding request was sent to the ceding
+                      company. Used for tracking response times.
+                    pattern: yyyy-mm-dd
                   referenceNumber:
                     type: string
+                    description: Reference or tracking number associated with the
+                      funding request, such as FedEx number, fax confirmation, or
+                      DTCC RPL ID.
+                    pattern: 'Based off Method of Initiation Example: FedEx Number,
+                      Fax Number, DTCC RPL ID etc'
                   nextActivityDate:
                     type: string
                     format: date
+                    description: The date by which the next action is expected, such
+                      as follow-up with the ceding company or posting of funds.
+                    pattern: yyyy-mm-dd
                   note:
                     type: string
                     minLength: 1
                     maxLength: 2000
+                    description: Additional context, comments, or carrier-provided
+                      details about the CanSell review. Intended for free-form explanations
+                      that do not fit into the structured fields.
+                    pattern: 1-2000 characters
                   methodOfInitiation:
                     type: string
-                    enum: [fax, email, mail, replacement]
-
+                    enum:
+                    - fax
+                    - email
+                    - mail
+                    - replacement
+                    description: The method used to initiate the funding request with
+                      the ceding company. Helps with audit and workflow tracking.
+          description: A list of all funding sources associated with the application.
+            Each object in the array represents a separate funding source.
     PolicySummary:
       description: Schema for policy summary data
       type: object
-      required: [policyNumber,applicationOrigin,cusip,status,statusDate]
+      required:
+      - policyNumber
+      - applicationOrigin
+      - cusip
+      - status
+      - statusDate
       properties:
         policyNumber:
           type: string
           minLength: 1
           maxLength: 30
+          description: Required path parameter for the policy number to be retrieved.
+            This is only required on requests that only return one policy number
+          pattern: 1-30 characters
         associatedFirmId:
           type: string
+          description: Identifier for the associated firm.
+          pattern: 1-65 characters
+          minLength: 1.0
+          maxLength: 65.0
         applicationOrigin:
           type: object
           properties:
             platform:
               type: string
               maxLength: 50
+              description: Platform of application origin
             isElectronic:
               type: boolean
+              description: Is application electronic?
             id:
               type: string
               maxLength: 65
+              description: Identifier for the application origin.
         cusip:
           $ref: '#/components/schemas/cusip'
         productName:
           type: string
           maxLength: 180
+          description: Product name
         isQualified:
           type: boolean
+          description: Is policy tax plan qualified?
         status:
           type: string
-          enum: [received, inProgress, completed, cancelled]
+          enum:
+          - received
+          - inProgress
+          - completed
+          - cancelled
+          description: "Indicates the current state of the suitability review for\
+            \ the application. Represents where the application is in the suitability\
+            \ workflow\u2014waiting to be reviewed, actively under evaluation, completed,\
+            \ or deemed not applicable based on product type or state requirements."
         statusDate:
-          description: 
           type: string
           format: date
         delivery:
@@ -798,122 +1062,173 @@ components:
             sentDate:
               type: string
               format: date
+              description: Delivery sent date
+              pattern: yyyy-mm-dd
             method:
               type: string
               enum:
-                - fedex
-                - ups
-                - electronicDelivery
-                - handDelivery
-                - usps
+              - fedex
+              - ups
+              - electronicDelivery
+              - handDelivery
+              - usps
+              description: Delivery method
             trackingNumber:
               type: string
+              description: Delivery tracking number
+              pattern: 1-65 characters
+              minLength: 1.0
+              maxLength: 65.0
         caseManager:
           type: object
-          required: [fullName, phoneNumber]
+          required:
+          - fullName
+          - phoneNumber
           properties:
             fullName:
               type: string
               minLength: 1
               maxLength: 180
-              pattern: ^[a-zA-Z0-9=()*@#\s.,'_/~%$!();:&"®`\-\\?"]{1,180}$
+              pattern: "^[a-zA-Z0-9=()*@#\\s.,'_/~%$!();:&\"\xAE`\\-\\\\?\"]{1,180}$"
+              description: Full name of case manager
             phoneNumber:
               type: string
               minLength: 10
               maxLength: 15
+              description: Phone number of case manager
+              pattern: 10-15 characters
             emailAddress:
               type: string
+              description: Email address of case manager
             websiteURL:
               type: string
+              description: Website URL of case manager
         producers:
-          $ref: "#/components/schemas/Producers"
+          $ref: '#/components/schemas/Producers'
         parties:
-          $ref: "#/components/schemas/Parties"
+          $ref: '#/components/schemas/Parties'
     Policy:
       description: Schema for policy data
       type: object
       allOf:
-        - $ref: '#/components/schemas/PolicySummary'
+      - $ref: '#/components/schemas/PolicySummary'
       properties:
         isActionNeeded:
           type: boolean
+          description: Flags whether any action is required before the document review
+            can continue or be finalized. May indicate missing pages, clarification
+            required, or forms that need corrections.
         actionSections:
           type: array
           items:
             type: string
-            enum: [suitability, cansellvalidation, documentReview, funding]
+            enum:
+            - suitability
+            - cansellvalidation
+            - documentReview
+            - funding
+          description: Sections needing action
         signedDate:
           type: string
           format: date
+          description: Signed date of policy
+          pattern: yyyy-mm-dd
         receivedDate:
           type: string
           format: date
+          description: Received date of policy
+          pattern: yyyy-mm-dd
         issuedDate:
           type: string
           format: date
+          description: Issued date of policy
+          pattern: yyyy-mm-dd
         effectiveDate:
           type: string
           format: date
+          description: Effective date of policy
+          pattern: yyyy-mm-dd
         rateEffectiveDate:
           type: string
           format: date
+          description: Rate effective date of policy
+          pattern: yyyy-mm-dd
         fundsHeldUntilDate:
           type: string
           format: date
+          description: Funds held until date
+          pattern: yyyy-mm-dd
         cancellation:
           type: object
-          required: [initiator,cancelledDate]
+          required:
+          - initiator
+          - cancelledDate
           properties:
             initiator:
               type: string
-              enum: [advisor, carrier, client]
+              enum:
+              - advisor
+              - carrier
+              - client
+              description: Who initiated cancellation
             cancelledDate:
               type: string
               format: date
+              description: Cancellation date
+              pattern: yyyy-mm-dd
             reason:
               type: string
               minLength: 1
               maxLength: 2000
+              description: Reason for cancellation
+              pattern: 1-2000 characters
+              enum:
+              - moreInformationNeeded
+              - notSuitableForClient
+              - other
     Policies:
       description: Schema for policies
       type: array
       items:
         allOf:
-          - $ref: '#/components/schemas/PolicySummary'
-          - type: object
+        - $ref: '#/components/schemas/PolicySummary'
+        - type: object
     PoliciesPagedResult:
       description: Schema for the paged result of policies
       type: object
       properties:
         startIndex:
           type: integer
+          description: Starting index of records returned
         itemsCount:
           type: integer
+          description: Total number of records returned
         totalItemsCount:
           type: integer
           maximum: 1000
+          description: Total number of records available for search
         policies:
-          $ref: "#/components/schemas/Policies"
+          $ref: '#/components/schemas/Policies'
     DetailApplicationStatus:
       description: Schema for detail application status
       type: object
       allOf:
-        - type: object
-          properties:
-            correlationId:
-              type: string
-              description: Correlation ID for tracking the request    
-        - $ref: '#/components/schemas/Policy'
-        - type: object
-          properties:
-            canSellValidations:
-              $ref: "#/components/schemas/CanSellValidation"
-            documentReviews:
-              $ref: "#/components/schemas/DocumentReview"
-            suitability:
-              $ref: "#/components/schemas/Suitability"
-            fundings:
-              $ref: "#/components/schemas/Funding"
+      - type: object
+        properties:
+          correlationId:
+            type: string
+            description: Correlation ID for tracking the request
+      - $ref: '#/components/schemas/Policy'
+      - type: object
+        properties:
+          canSellValidations:
+            $ref: '#/components/schemas/CanSellValidation'
+          documentReviews:
+            $ref: '#/components/schemas/DocumentReview'
+          suitability:
+            $ref: '#/components/schemas/Suitability'
+          fundings:
+            $ref: '#/components/schemas/Funding'
     SummaryApplicationStatuses:
       description: Schema for application statuses
       type: array
@@ -925,15 +1240,19 @@ components:
       properties:
         correlationId:
           type: string
+          description: Custom header used to pass in a unique identifier
         startIndex:
           type: integer
+          description: Starting index of records returned
         itemsCount:
           type: integer
           maximum: 1000
+          description: Total number of records returned
         totalItemsCount:
           type: integer
+          description: Total number of records available for search
         applicationStatuses:
-          $ref: "#/components/schemas/SummaryApplicationStatuses"
+          $ref: '#/components/schemas/SummaryApplicationStatuses'
     SearchSummaryApplicationStatusesRequest:
       description: Schema for searching summary application statuses
       type: object
@@ -942,30 +1261,45 @@ components:
           type: string
           minLength: 1
           maxLength: 30
+          description: Required path parameter for the policy number to be retrieved.
+            This is only required on requests that only return one policy number
+          pattern: 1-30 characters
         associatedFirmId:
           type: string
           minLength: 1
           maxLength: 65
+          description: Associated firm identifier to filter results.
+          pattern: 1-65 characters
         cusip:
           $ref: '#/components/schemas/cusip'
         producerNumber:
           type: string
           maxLength: 30
-        npn: 
+          description: Producer number to filter results.
+        npn:
           type: string
           maxLength: 10
+          description: National Producer Number assigned to the entity, if applicable,
+            for tracking licensing and appointments.
         crdNumber:
           type: string
           maxLength: 10
+          description: Central Registration Depository (CRD) number assigned to the
+            individual, typically used for registered representatives.
         partyTaxId:
           type: string
           maxLength: 9
+          description: "Producer\u2019s tax identification number"
+          pattern: 'length: 9'
         applicationOriginId:
           type: string
+          description: Application origin identifier to filter results.
         trackingNumber:
           type: string
           minLength: 1
           maxLength: 65
+          description: Delivery tracking number to filter results.
+          pattern: 1-65 characters
         finishedCutoffDays:
           type: integer
           default: 7
