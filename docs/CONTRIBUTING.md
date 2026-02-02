@@ -109,10 +109,9 @@ The version selector will automatically appear when multiple versions are availa
 
 To publish your API documentation to GitHub Pages:
 
-1. Push your changes to the repository branch that's configured for GitHub Pages (currently `gh-pages`)
+1. Push your changes to the repository branch that's configured for GitHub Pages (currently `main`).  Note: Only the content in the `docs` directory is published.
 
-
-2. View published docs at `https://insured-retirement-institute.github.io/Style-Guide/`)
+2. View published docs at [api.irionline.org](https://api.irionline.org)
 
 ## Customizing the UI
 
