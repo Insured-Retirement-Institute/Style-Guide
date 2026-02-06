@@ -1,6 +1,6 @@
 # Style Guide
 
-The style guide provides rules, regulations, and recommendations for Digital-First standards. OpenAPI definitions can be found on this repository's published GitHub Page at [api.irionline.org](https://api.irionline.org).
+The style guide provides rules, regulations, and recommendations for Digital-First standards. The OpenAPI specifications can be found at [api.irionline.org](https://api.irionline.org), which is the published GitHub Page of this repository.
 
 ## Style Conventions
 
