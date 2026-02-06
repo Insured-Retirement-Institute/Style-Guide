@@ -1,6 +1,6 @@
 # Style Guide
 
-The style guide provides rules, regulations, and recommendations for Digital-First standards. OpenAPI definitions can be found on the [GitHub Page](https://insured-retirement-institute.github.io/Style-Guide/) of this repository.
+The style guide provides rules, regulations, and recommendations for Digital-First standards. The OpenAPI specifications can be found at [api.irionline.org](https://api.irionline.org), which is the published GitHub Page of this repository.
 
 ## Style Conventions
 
@@ -160,4 +160,4 @@ Security issues and bugs should be reported directly to Katherine Dease kdease@i
 
 ## Code of conduct
 
-See [code of conduct](https://github.com/Insured-Retirement-Institute/Style-Guide/blob/main/CODE_OF_CONDUCT.md)
+See [code of conduct](https://github.com/Insured-Retirement-Institute/Digital-First-Specifications/blob/main/CODE_OF_CONDUCT.md)
