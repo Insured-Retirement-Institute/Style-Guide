@@ -36,6 +36,44 @@ paths:
             description: Service Unavailable
           "504":
             description: Gateway Timeout.
+
+  /v1/income-activation/searches: 
+    post:
+      operationId: getBulkPolicyIncome
+      summary: Bulk Policy Income.
+      description: Policy Income by firmId and/or npn.
+      tags:
+        - Bulk Policy Income
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+      requestBody:
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/IncomeActivationRequest'
+      responses:
+          "200":
+            description: Bulk Policy Income retrieved successfully.
+            content:
+              application/json:
+                schema:
+                    $ref: '#/components/schemas/IncomeActivationResponse'
+
+          "400":
+            description: Bad Request
+          "401":
+            description: Unauthorized 
+          "404":
+            description: Not Found
+          "405":
+            description: Method Not Allowed
+          "500":
+            description: Internal Server Error
+          "503":
+            description: Service Unavailable
+          "504":
+            description: Gateway Timeout.
+
 components:
   parameters:
     policyNumber:
@@ -69,6 +107,15 @@ components:
       type: string
       minLength: 1
       maxLength: 30
+      examples: 
+            - "P78A21423"
+    startIndex:
+      type: integer
+    itemsCount:
+      type: integer
+    totalAvailableItemsCount:
+      type: integer
+
     PolicyIncomeActivationResponse:
       description: Schema for policy income activation data
       type: object
@@ -76,7 +123,11 @@ components:
       properties:
         policyNumber:
           $ref: '#/components/schemas/policyNumber'
-        isIncomeRiderActivated:
+        cusip:
+          type: string
+          examples: 
+            - "037833100"
+        isIncomeActivated:
           type: boolean
         lastPaymentDate:
           type: string
@@ -99,10 +150,6 @@ components:
           maximum: 365
           examples: 
             - 24
-        cusip:
-          type: string
-          examples: 
-            - "037833100"
         incomeType:
           type: string
           enum:
@@ -110,3 +157,36 @@ components:
             - incomeRiders
             - scheduledPayments
             - rmd
+
+    IncomeActivationRequest:
+      description: Schema for policy income activation data
+      type: object
+      required: [firmId]
+      properties:
+        firmId:
+          type: string
+          examples: 
+            - "12345"
+        npn:
+          type: string
+          examples: 
+            - "257893456"
+
+    IncomeActivationResponse:
+      description: Schema for bulk policy income response
+      type: object
+      properties:
+        startIndex:
+          $ref: '#/components/schemas/startIndex'
+        itemsCount:  
+          $ref: '#/components/schemas/itemsCount'
+        totalAvailableItemsCount:  
+          $ref: '#/components/schemas/totalAvailableItemsCount'
+        policyIncomes:
+          $ref: '#/components/schemas/policyIncomes'
+
+    policyIncomes:
+      description: Schema for bulk policy income response
+      type: array
+      items:
+        $ref: '#/components/schemas/PolicyIncomeActivationResponse'
