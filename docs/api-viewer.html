@@ -113,7 +113,6 @@
       const selectedVersion = versionSelector.value;
 
       const apiPath = apiDefinitions[selectedAPI]?.versions[selectedVersion]?.path || selectedAPI;
-      console.log(apiDefinitions[selectedAPI])
 
       // Update URL for bookmarking/sharing
       const url = new URL(window.location);
