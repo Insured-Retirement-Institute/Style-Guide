@@ -1,8 +1,19 @@
-# Style Guide
+# Digital First Specifications
 
-The style guide provides rules, regulations, and recommendations for Digital-First standards. The OpenAPI specifications can be found at [api.irionline.org](https://api.irionline.org), which is the published GitHub Page of this repository.
+This repository contains:
 
-## Style Conventions
+* Published OpenAPI specifications for the Digital-First standards
+* Style Guide and Versioning conventions used for all OpenAPI specifications
+
+## Published OpenAPI Specifications
+
+Once a working group's API specification has been reviewed and approved by the [Governance Committee](https://www.irionline.org/member-programs/operations-technology/committee-hub/governance/), the OpenAPI specification is moved into this repository and published at [specs.dfa.irionline.org](https://specs.dfa.irionline.org), which is the published GitHub Page of this repository.
+
+## Style Guide
+
+The style guide provides rules, regulations, and recommendations for Digital-First standards.
+
+### Style Conventions
 
 Field naming
 - **Booleans**: Should be prefixed with is or has.
