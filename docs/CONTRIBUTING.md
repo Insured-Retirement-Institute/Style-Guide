@@ -111,7 +111,7 @@ To publish your API documentation to GitHub Pages:
 
 1. Push your changes to the repository branch that's configured for GitHub Pages (currently `main`).  Note: Only the content in the `docs` directory is published.
 
-2. View published docs at [api.irionline.org](https://api.irionline.org)
+2. View published docs at [specs.dfa.irionline.org](https://specs.dfa.irionline.org)
 
 ## Customizing the UI
 
