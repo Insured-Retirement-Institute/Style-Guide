@@ -22,6 +22,8 @@
             <option value="producertraining.yaml">Producer Training Update</option>
             <option value="policyincome.yaml">Policy Income API</option>
             <option value="onetimewithdrawal1.yaml">One-Time Withdrawals API</option>
+            <option value="onetimewithdrawalquote1.yaml">One-Time Withdrawal Quote API</option>
+            <option value="systematicprogram1.yaml">Systematic Program API</option>
             <!-- Add more options as you add more APIs -->
             <!-- <option value="another-api/openapi.yaml">Another API</option> -->
           </select>
@@ -82,6 +84,24 @@
         versions: {
           "v1": {
             path: "onetimewithdrawal1.yaml",
+            displayName: "v1.0.0"
+          }
+        }
+      },
+      "onetimewithdrawalquote1.yaml": {
+        name: "One-Time Withdrawal Quote API",
+        versions: {
+          "v1": {
+            path: "onetimewithdrawalquote1.yaml",
+            displayName: "v1.0.0"
+          }
+        }
+      },
+      "systematicprogram1.yaml": {
+        name: "Systematic Program API",
+        versions: {
+          "v1": {
+            path: "systematicprogram1.yaml",
             displayName: "v1.0.0"
           }
         }
