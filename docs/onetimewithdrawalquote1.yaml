@@ -1,0 +1,1762 @@
+openapi: 3.1.0
+info:
+  title: Withdrawal Quote API
+  version: 1.0.0
+  description: >
+    A single, standardized **POST** quote endpoint for withdrawal transactions.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+paths:
+  /v1/policies/{policyNumber}/withdrawals/full-surrenders/quote:
+    post:
+      operationId: calculateFullSurrenderQuote
+      tags:
+        - Withdrawal Quote
+      description: >
+        Calculate a withdrawal quote for a **full surrender** transaction. This is a synchronous compute action
+      parameters:
+        - $ref: '#/components/parameters/CorrelationIdHeader'
+        - $ref: '#/components/parameters/PolicyNumber'
+        - $ref: '#/components/parameters/AssociatedFirmId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FullSurrenderQuoteRequest'
+            examples:
+              FullSurrenderQuoteRequest_Example:
+                summary: Full Surrender Quote compute request
+                value:
+                  effectiveDate: '2026-01-16'
+                  nsccParticipantId: 'NSCC999'
+                  cusip: '0275IFOW4'
+                  producer:
+                    producerNumber: 'PROD999'
+                    npn: '9876543210'
+                    crdNumber: '1234567890'
+                  transactionAmounts:
+                    disbursementType: 'NET'
+                    disbursementPaymentForm: 'EFT'
+                  payeeOrBeneficiary:
+                    - paymentForm: 'EFT'
+                      allocationPercentage: 100
+                      party:
+                        firstName: 'Taylor'
+                        middleName: 'A'
+                        lastName: 'Johnson'
+                        type: 'individual'
+                        taxId: '123456789'
+                      bank:
+                        bankId: 'Bank_FS'
+                        nameOnAccount: 'Taylor Johnson'
+                        accountStatus: 'ACTIVEBANKACCOUNT'
+                        accountType: 'CHECKING'
+                        accountNumber: '9876543210'
+                        routingNumber: '987654321'
+                        branchName: 'Central Branch'
+                  parties:
+                    - paymentForm: 'EFT'
+                      allocationPercentage: 100
+                      bank:
+                        bankId: 'Bank_FS'
+                        nameOnAccount: 'Taylor Johnson'
+                        accountStatus: 'ACTIVEBANKACCOUNT'
+                        accountType: 'CHECKING'
+                        accountNumber: '9876543210'
+                        routingNumber: '987654321'
+                        branchName: 'Central Branch'
+                      address:
+                        addressId: 'Addr_FS'
+                        addressType: 'RESIDENCE'
+                        addressLine1: '200 Main St'
+                        city: 'New York'
+                        state: 'NY'
+                        zipCode: '10001'
+                        country: 'US'
+      responses:
+        '200':
+          description: Withdrawal quote calculated successfully.
+          headers:
+            correlationId:
+              $ref: '#/components/headers/correlationId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullSurrenderQuoteResponse'
+              examples:
+                FullSurrenderResponse:
+                  summary: Full Surrender Quote Response
+                  value:
+                    status: 'SUCCESS'
+                    policyNumber: 'POL123456789'
+                    effectiveDate: '2026-01-16'
+                    cusip: '0275IFOW4'
+                    freeWithdrawalAmount: 1000.00
+                    remainingFreeWithdrawalAmount: 500.00
+                    tenPercentOfPurchasePayments: 10000.00
+                    freeAmountGain: 120.00
+                    freeAmountPremium: 300.00
+                    transactionAmounts:
+                      appliedAmount: 5000.00
+                      taxableAmount: 1200.00
+                      totalChargeAmount: 50.00
+                      totalTaxWithheldAmount: 100.00
+                      netPaymentAmount: 4850.00
+                      disbursementType: 'GROSS'
+                      disbursementPaymentForm: 'DTCC'
+                      grossPaymentAmount: 5000.00
+                      cashSurrenderValue: 25000.00
+                      accumulatedCashValue: 18000.00
+                      grossCashValueAmount: 25000.00
+                    charges:
+                      - chargeType: 'SURRENDERCHARGE'
+                        chargeAmount: 50.00
+                        chargeCategory: 'FEE'
+                        isChargeWaived: false
+                        chargeWaiverReason: 'NONE'
+                        isMvaApplied: false
+                    taxWithheldAmounts:
+                      - taxId: '123456789'
+                        taxWithholdingType: 'FEDERAL'
+                        withholdAmount: 100.00
+                        withheldTaxableAmount: 1200.00
+                    payeeOrBeneficiary:
+                      - taxId: '123456789'
+                        paymentForm: 'DTCC'
+                        allocationPercentage: 100
+                        disbursementAmount: 4850.00
+                    taxQualification:
+                      isTefraApplicable: true
+                      isTemraApplicable: true
+                      tefraValue: 100.00
+                      temraValue: 100.00
+                      isirc72qPenaltyApplied: false
+                      taxablePortionRule: 'LIFO'
+                    parties:
+                      - taxId: '123456789'
+                        firstName: 'Taylor'
+                        middleName: 'A'
+                        lastName: 'Johnson'
+                        type: individual
+                        relationships:
+                          - owner
+                        paymentForm: 'DTCC'
+                        allocationPercentage: 100
+        '400': { $ref: '#/components/responses/BadRequestError' }
+        '401': { $ref: '#/components/responses/UnauthorizedError' }
+        '403': { $ref: '#/components/responses/ForbiddenError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '405': { $ref: '#/components/responses/MethodNotAllowedError' }
+        '406': { $ref: '#/components/responses/NotAcceptableError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '413': { $ref: '#/components/responses/PayloadTooLargeError' }
+        '415': { $ref: '#/components/responses/UnsupportedMediaTypeError' }
+        '422': { $ref: '#/components/responses/UnprocessableEntityError' }
+        '429': { $ref: '#/components/responses/TooManyRequestsError' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '502': { $ref: '#/components/responses/BadGatewayError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailableError' }
+        '504': { $ref: '#/components/responses/GatewayTimeoutError' }
+
+  /v1/policies/{policyNumber}/withdrawals/one-time-partials/quote:
+    post:
+      operationId: calculateOneTimePartialWithdrawalQuote
+      tags: [Withdrawal Quote]
+      description: >
+        Calculate a quote for a **one-time partial withdrawal** (including RMD when transactionSubType is `rmd`).
+      parameters:
+        - $ref: '#/components/parameters/CorrelationIdHeader'
+        - $ref: '#/components/parameters/PolicyNumber'
+        - $ref: '#/components/parameters/TransactionSubType'
+        - $ref: '#/components/parameters/AssociatedFirmId'
+      x-business-rule:
+        rmd:
+          when:
+            transactionSubType: rmd
+          require:
+            - $.rmdInfo
+        nonRmd:
+          when:
+            transactionSubType:
+              not:
+                in: [rmd]
+          constraints:
+            - name: "forbid-rmdInfo-when-not-rmd"
+              description: When transactionSubType is not RMD, rmdInfo must be omitted to avoid ambiguous payloads.
+              assert: "$.rmdInfo == null"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePartialWithdrawalQuoteRequest'
+            examples:
+              PartialWithdrawalQuoteRequest_RMD:
+                summary: Partial one-time withdrawal (RMD) quote compute request
+                value:
+                  effectiveDate: '2026-01-16'
+                  nsccParticipantId: 'NSCC888'
+                  cusip: '0275IFOW4'
+                  producer:
+                    producerNumber: 'PROD888'
+                    npn: '1111111111'
+                    crdNumber: '2222222222'
+                  transactionAmounts:
+                    requestedAmount: 750.00
+                    amountType: 'AMOUNT'
+                    disbursementType: 'NET'
+                    disbursementPaymentForm: 'ACH'
+                  allocationOption: 'PRORATA'
+                  fundDistributions:
+                    - fundId: 'FUND-RMD1'
+                      fundName: 'Balanced Fund'
+                      totalFundValue: null
+                      requestedAmount: null
+                    - fundId: 'FUND-RMD2'
+                      fundName: 'Equity Fund'
+                      totalFundValue: null
+                      requestedAmount: null
+                  rmdInfo:
+                    rmdTaxYear: 2026
+                    rmdAgeAtDistribution: 72
+                    rmdSpouseDoB: '1955-01-01'
+                    rmdRequestedAmount: 750.00
+                    rmdCalculationMethod: 'UNIFORM_LIFETIME_TABLE'
+                    rmdPriorYearEndValue: 80000.00
+                  payeeOrBeneficiary:
+                    - paymentForm: 'ACH'
+                      allocationPercentage: 100.00
+                      party:
+                        taxId: '123456789'
+                        firstName: 'Morgan'
+                        middleName: 'B'
+                        lastName: 'Lee'
+                        type: individual
+                      bank:
+                        bankId: 'Bank_RMD'
+                        nameOnAccount: 'Morgan Lee'
+                        accountStatus: 'ACTIVEBANKACCOUNT'
+                        accountType: 'CHECKING'
+                        accountNumber: '123123123'
+                        routingNumber: '321321321'
+                        branchName: 'Downtown Branch'
+                  parties:
+                    - paymentForm: 'ACH'
+                      allocationPercentage: 100
+                      bank:
+                        bankId: 'Bank_RMD'
+                        nameOnAccount: 'Morgan Lee'
+                        accountStatus: 'ACTIVEBANKACCOUNT'
+                        accountType: 'CHECKING'
+                        accountNumber: '123123123'
+                        routingNumber: '321321321'
+                        branchName: 'Downtown Branch'
+                      address:
+                        addressId: 'Addr_RMD'
+                        addressType: 'RESIDENCE'
+                        addressLine1: '300 Elm St'
+                        city: 'Chicago'
+                        state: 'IL'
+                        zipCode: '60601'
+                        country: 'US'
+                  taxWithholdingInstructions:
+                    - party:
+                        taxId: '123456789'
+                        firstName: 'Morgan'
+                        middleName: 'B'
+                        lastName: 'Lee'
+                        type: individual
+                      taxWithholdingType: 'FEDERAL'
+                      taxRateToUse: 'USEVALUESENTERED'
+                      filingStatus: 'SINGLE'
+                      dollar: 15.00
+                      exemptions: 0
+                  charges:
+                    - chargeType: 'WITHDRAWALCHARGE'
+                      isChargeWaived: false
+
+              OneTimePartialWithdrawalQuoteNonRMD_Example:
+                  summary: Partial Withdrawal non-RMD subtype (specified-withdrawal)
+                  value:
+                    effectiveDate: '2025-04-01'
+                    nsccParticipantId: 'NSCC777'
+                    cusip: '0275IFOW4'
+                    producer:
+                      producerNumber: 'PROD777'
+                      npn: '3333333333'
+                      crdNumber: '4444444444'
+                    transactionAmounts:
+                      requestedAmount: 1000
+                      amountType: 'AMOUNT'
+                      disbursementType: 'GROSS'
+                      disbursementPaymentForm: 'CHECK'
+                    allocationOption: 'SPECIFIEDFUNDS'
+                    fundDistributions:
+                      - fundId: 'FUND-NRMD1'
+                        fundName: 'Income Fund'
+                        totalFundValue: 4000
+                        requestedAmount: 1000
+                    payeeOrBeneficiary:
+                      - paymentForm: 'CHECK'
+                        allocationPercentage: 100.00
+                        party:
+                          taxId: '123456789'
+                          firstName: 'Jordan'
+                          middleName: 'C'
+                          lastName: 'Kim'
+                          type: individual
+                          address:
+                            addressId: 'Addr_NRMD'
+                            addressType: 'RESIDENCE'
+                            addressLine1: '400 Oak St'
+                            addressLine2: 'Apt 2'
+                            addressLine3: 'Bldg B'
+                            addressLine4: 'String'
+                            addressLine5: 'String'
+                            city: 'San Francisco'
+                            state: 'CA'
+                            zipCode: '94102'
+                            zipCodeExtension: '5555'
+                            country: 'US'
+                    parties:
+                      - taxId: '123456789'
+                        firstName: 'Jordan'
+                        middleName: 'C'
+                        lastName: 'Kim'
+                        type: individual
+                        relationships:
+                          - owner
+                        paymentForm: 'CHECK'
+                        allocationPercentage: 100
+                        bank:
+                          bankId: 'Bank_NRMD'
+                          nameOnAccount: 'Jordan Kim'
+                          accountStatus: 'ACTIVEBANKACCOUNT'
+                          accountType: 'CHECKING'
+                          accountNumber: '555666777'
+                          routingNumber: '111222333'
+                          branchName: 'Uptown Branch'
+                        address:
+                          addressId: 'Addr_NRMD'
+                          addressType: 'RESIDENCE'
+                          addressLine1: '400 Oak St'
+                          addressLine2: 'Apt 2'
+                          addressLine3: 'Bldg B'
+                          addressLine4: 'String'
+                          addressLine5: 'String'
+                          city: 'San Francisco'
+                          state: 'CA'
+                          zipCode: '94102'
+                          zipCodeExtension: '5555'
+                          country: 'US'
+                    taxWithholdingInstructions:
+                      - party:
+                          taxId: '123456789'
+                          firstName: 'Jordan'
+                          middleName: 'C'
+                          lastName: 'Kim'
+                          type: individual
+                        taxWithholdingType: 'STATE'
+                        taxRateToUse: 'USEDEFAULTTABLE'
+                        filingStatus: 'DEFAULT'
+                        dollar: 5
+                        exemptions: 0
+                        taxJurisdiction: 'USA'
+                    charges:
+                      - chargeType: 'WITHDRAWALCHARGE'
+                        isChargeWaived: true
+                        chargeWaiverReason: 'PROMO'
+                    isOverride: true
+      responses:
+        '200':
+          description: Withdrawal quote calculated successfully.
+          headers:
+            correlationId:
+              $ref: '#/components/headers/correlationId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartialsWithdrawalQuoteResponse'
+              examples:
+                partialRmdResponse:
+                  summary: Partial One-Time Withdrawal - RMD Quote Response
+                  value:
+                    status: 'SUCCESS'
+                    policyNumber: 'POL123456789'
+                    effectiveDate: '2026-01-16'
+                    cusip: '0275IFOW4'
+                    freeWithdrawalAmount: 1000.00
+                    remainingFreeWithdrawalAmount: 500.00
+                    tenPercentOfPurchasePayments: 10000.00
+                    freeAmountGain: 120.00
+                    freeAmountPremium: 300.00
+                    transactionAmounts:
+                      amountType: 'AMOUNT'
+                      requestedAmount: 5000.00
+                      appliedAmount: 5000.00
+                      taxableAmount: 1200.00
+                      totalChargeAmount: 50.00
+                      totalTaxWithheldAmount: 100.00
+                      netPaymentAmount: 4850.00
+                      disbursementType: 'GROSS'
+                      disbursementPaymentForm: 'DTCC'
+                      grossPaymentAmount: 5000.00
+                      cashSurrenderValue: 25000.00
+                      accumulatedCashValue: 18000.00
+                      grossCashValueAmount: 25000.00
+                    charges:
+                    - chargeType: 'LOANPAYOFF'
+                      chargeAmount: 50.00
+                      chargeCategory: 'LOAN_DEDUCTION'
+                      isChargeWaived: false
+                      chargeWaiverReason: 'NONE'
+                      isMvaApplied: false
+                      loanDeduction:
+                        loanType: 'PREFERRED'
+                        loanInterestType: 'FIXED'
+                        loanPrincipalDeductedAmount: 45.00
+                        loanInterestDeductedAmount: 5.00
+                        loanPayoffIndicator: false
+                    taxWithheldAmounts:
+                    - taxId: '123456789'
+                      taxWithholdingType: 'FEDERAL'
+                      withholdAmount: 100.00
+                      withheldTaxableAmount: 1200.00
+                    payeeOrBeneficiary:
+                    - taxId: '123456789'
+                      paymentForm: 'DTCC'
+                      allocationPercentage: 100
+                      disbursementAmount: 4850.00
+                    taxQualification:
+                      isTefraApplicable: true
+                      isTemraApplicable: true
+                      tefraValue: 100.00
+                      temraValue: 100.00
+                      isirc72qPenaltyApplied: false
+                      taxablePortionRule: 'LIFO'
+                    parties:
+                    - taxId: '123456789'
+                      firstName: 'Taylor'
+                      middleName: 'A'
+                      lastName: 'Johnson'
+                      type: individual
+                      relationships:
+                         - owner
+                      paymentForm: 'DTCC'
+                      allocationPercentage: 100
+                    rmdInfo:
+                      rmdTaxYear: 2026
+                      rmdAgeAtDistribution: 72
+                      rmdSpouseDoB: '1955-01-01'
+                      rmdRequestedAmount: 2000.00
+                      rmdCalculationMethod: 'UNIFORM_LIFETIME_TABLE'
+                      rmdPriorYearEndValue: 150000.00
+                      calculatedAnnualRmdAmount: 6000.00
+                      remainingRmdAmountAfterThisQuote: 4000.00
+                      rmdWithdrawalAmountThisYear: 2000.00
+                      totalRMDAmountRemaining: 4000.00
+
+                partialSpecifiedWithdrawalResponse:
+                  summary: Partial One-Time Withdrawal - Specified Withdrawal (Loan Deduction in Charges)
+                  value:
+                    status: 'SUCCESS'
+                    policyNumber: 'POL123456789'
+                    effectiveDate: '2026-01-16'
+                    cusip: '0275IFOW4'
+                    freeWithdrawalAmount: 1000.00
+                    remainingFreeWithdrawalAmount: 500.00
+                    tenPercentOfPurchasePayments: 10000.00
+                    freeAmountGain: 120.00
+                    freeAmountPremium: 300.00
+                    transactionAmounts:
+                      amountType: 'AMOUNT'
+                      requestedAmount: 5000.00
+                      appliedAmount: 5000.00
+                      taxableAmount: 1200.00
+                      totalChargeAmount: 50.00
+                      totalTaxWithheldAmount: 100.00
+                      netPaymentAmount: 4850.00
+                      disbursementType: 'GROSS'
+                      disbursementPaymentForm: 'DTCC'
+                      grossPaymentAmount: 5000.00
+                      cashSurrenderValue: 25000.00
+                      accumulatedCashValue: 18000.00
+                      grossCashValueAmount: 25000.00
+                    charges:
+                    - chargeType: 'LOANPAYOFF'
+                      chargeAmount: 50.00
+                      chargeCategory: 'LOAN_DEDUCTION'
+                      isChargeWaived: false
+                      chargeWaiverReason: 'NONE'
+                      isMvaApplied: false
+                      loanDeduction:
+                        loanType: 'PREFERRED'
+                        loanInterestType: 'FIXED'
+                        loanPrincipalDeductedAmount: 45.00
+                        loanInterestDeductedAmount: 5.00
+                        loanPayoffIndicator: false
+                    taxWithheldAmounts:
+                    - taxId: '123456789'
+                      taxWithholdingType: 'FEDERAL'
+                      withholdAmount: 100.00
+                      withheldTaxableAmount: 1200.00
+                    payeeOrBeneficiary:
+                    - taxId: '123456789'
+                      paymentForm: 'DTCC'
+                      allocationPercentage: 100
+                      disbursementAmount: 4850.00
+                    taxQualification:
+                      isTefraApplicable: true
+                      isTemraApplicable: false
+                      tefraValue: 100.00
+                      temraValue: 0
+                      isirc72qPenaltyApplied: false
+                      taxablePortionRule: 'LIFO'
+                    parties:
+                    - taxId: '123456789'
+                      firstName: 'Taylor'
+                      middleName: 'A'
+                      lastName: 'Johnson'
+                      type: individual
+                      relationships:
+                         - owner
+                      paymentForm: 'DTCC'
+                      allocationPercentage: 100
+        '400': { $ref: '#/components/responses/BadRequestError' }
+        '401': { $ref: '#/components/responses/UnauthorizedError' }
+        '403': { $ref: '#/components/responses/ForbiddenError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '405': { $ref: '#/components/responses/MethodNotAllowedError' }
+        '406': { $ref: '#/components/responses/NotAcceptableError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '413': { $ref: '#/components/responses/PayloadTooLargeError' }
+        '415': { $ref: '#/components/responses/UnsupportedMediaTypeError' }
+        '422': { $ref: '#/components/responses/UnprocessableEntityError' }
+        '429': { $ref: '#/components/responses/TooManyRequestsError' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '502': { $ref: '#/components/responses/BadGatewayError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailableError' }
+        '504': { $ref: '#/components/responses/GatewayTimeoutError' }
+
+components:
+  parameters:
+    PolicyNumber:
+      name: policyNumber
+      in: path
+      required: true
+      description: Unique policy number (1 to 30 characters).
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 30
+    TransactionSubType:
+      name: transactionSubType
+      in: query
+      required: true
+      description: >
+        Required for one-time partial withdrawal quotes. Not used for full surrenders.
+        For one-time RMD quotes, select transactionSubType as rmd.
+      schema:
+        type: string
+        enum: [specified-withdrawal, surrender-free, rider-free, interest-only, rmd]
+    CorrelationIdHeader:
+      name: correlationId
+      in: header
+      required: false
+      description: Optional client-supplied identifier to trace the request.
+      schema:
+        type: string
+        maxLength: 100
+    AssociatedFirmId:
+      name: associatedFirmId
+      in: query
+      required: false
+      description: Optional firm/linkage identifier (preferred location per IRI).
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 65
+  headers:
+    correlationId:
+      description: Correlates this response to requests and downstream logs.
+      schema:
+        type: string
+        maxLength: 100
+  responses:
+    BadRequestError:
+      description: Bad Request
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnauthorizedError:
+      description: Unauthorized
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ForbiddenError:
+      description: Forbidden
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFoundError:
+      description: Not Found
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    MethodNotAllowedError:
+      description: Method Not Allowed
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotAcceptableError:
+      description: Not Acceptable
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ConflictError:
+      description: >
+        A transaction for this policy is already in progress or an equivalent request has already been accepted.
+        Re-submitting the same transaction while it is in-flight will be rejected to prevent duplicate processing.
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PayloadTooLargeError:
+      description: Payload Too Large
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnsupportedMediaTypeError:
+      description: Unsupported Media Type
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntityError:
+      description: Unprocessable Entity
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequestsError:
+      description: Too Many Requests
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal Server Error
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadGatewayError:
+      description: Bad Gateway
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServiceUnavailableError:
+      description: Service Unavailable
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeoutError:
+      description: Gateway Timeout
+      headers:
+        correlationId:
+          $ref: '#/components/headers/correlationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    OneTimePartialWithdrawalQuoteRequest:
+      type: object
+      description: >
+        Request to perform a one-time partial withdrawal.
+      properties:
+        effectiveDate:
+          type: string
+          format: date
+        nsccParticipantId:
+          type: string
+          maxLength: 100
+        cusip:
+          type: string
+          minLength: 9
+          maxLength: 9
+          pattern: '^[0-9]{3}[A-Z0-9]{5}[0-9]$'
+          description: unique identification code. Optional; REQUIRED only when policyNumber is not globally unique.
+        producer:
+          $ref: '#/components/schemas/Producer'
+        transactionAmounts:
+          $ref: '#/components/schemas/TransactionAmountsRequest'
+        allocationOption:
+          type: string
+          enum: [PRORATA, DOLLAR, SPECIFYPERCENTAGE, SPECIFIEDFUNDS, SPECIFIEDSEGMENTS, DEFAULT, PECKINGORDER, EARNINGSONLY]
+          description: Defines the format of how the funds are removed
+        fundDistributions:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundDistribution'
+        rmdInfo:
+          $ref: '#/components/schemas/RmdInfo'
+        payeeOrBeneficiary:
+          type: array        
+          items:
+            $ref: '#/components/schemas/PayeeOrBeneficiary'
+        parties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        taxWithholdingInstructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxWithholdingInstruction'
+        charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Charges'
+        isOverride:
+          type: boolean
+      required:
+        - effectiveDate
+        - allocationOption
+      allOf:
+        - if:
+            properties:
+              allocationOption:
+                const: SPECIFIEDFUNDS
+              transactionAmounts:
+                type: object
+                properties:
+                  amountType:
+                    const: PERCENTAGE
+                required: [amountType]
+            required: [allocationOption, transactionAmounts]
+          then:
+            required:
+              - fundDistributions
+            properties:
+              fundDistributions:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/FundDistribution'
+                    - type: object
+                      required: [requestedPercentage]
+                    - not:
+                          required: [requestedAmount]
+        - if:
+            properties:
+              allocationOption:
+                const: SPECIFIEDFUNDS
+              transactionAmounts:
+                type: object
+                properties:
+                  amountType:
+                    const: AMOUNT
+                required: [amountType]
+            required: [allocationOption, transactionAmounts]
+          then:
+            required:
+              - fundDistributions
+            properties:
+              fundDistributions:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/FundDistribution'
+                    - type: object
+                      required: [requestedAmount]
+                    - not:
+                          required: [requestedPercentage]
+
+    FullSurrenderQuoteRequest:
+      type: object
+      description: Request payload to compute a full surrender quote. Mirrors the Full Surrender submission shape.
+      properties:
+        effectiveDate:
+          type: string
+          format: date
+        nsccParticipantId:
+          type: string
+          maxLength: 100
+        cusip:
+          type: string
+          minLength: 9
+          maxLength: 9
+          pattern: '^[0-9]{3}[A-Z0-9]{5}[0-9]$'
+          description: unique identification code. Optional; Required only when policyNumber is not globally unique.
+        producer:
+          $ref: '#/components/schemas/Producer'
+        transactionAmounts:
+          $ref: '#/components/schemas/TransactionAmountsFullRequest'
+        payeeOrBeneficiary:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayeeOrBeneficiaryRequest'
+        parties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartyRequest'
+        taxWithholdingInstructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxWithholdingInstruction'
+        charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Charges'
+        isOverride:
+          type: boolean
+      required:
+        - effectiveDate
+
+    TransactionAmountsRequest:
+      type: object
+      description: Details of financial amounts associated with the partial withdrawal request
+      properties:
+        requestedAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        requestedPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+        amountType:
+          type: string
+          enum: [AMOUNT, PERCENTAGE, MAX, FREEWITHDRAWALAMOUNT, WITHDRAWALUNTILBASIS, EARNINGSONLY]
+        disbursementType:
+          type: string
+          enum: [GROSS, NET]
+        disbursementPaymentForm:
+          type: string
+          enum: [DTCC, EFT, ACH, CHECK, WIRE]
+      required:
+        - amountType
+        - disbursementType
+      allOf:
+        - if:
+            properties:
+              amountType:
+                const: AMOUNT
+            required:
+              - amountType
+          then:
+            required:
+              - requestedAmount
+            not:
+              required:
+                - requestedPercentage
+        - if:
+            properties:
+              amountType:
+                const: PERCENTAGE
+            required:
+              - amountType
+          then:
+            required:
+              - requestedPercentage
+            not:
+              required:
+                - requestedAmount
+        - if:
+          properties:
+            amountType:
+              enum: [MAX, FREEWITHDRAWALAMOUNT, WITHDRAWALUNTILBASIS, EARNINGSONLY]
+          then:
+            required: [amountType]
+            not:
+              anyOf:
+                - required: [requestedAmount]
+                - required: [requestedPercentage]
+
+    TransactionAmountsFullRequest:
+      type: object
+      description: Details of financial amounts associated with the full surrender request
+      properties:
+        disbursementType:
+          type: string
+          enum: [GROSS, NET]
+        disbursementPaymentForm:
+          type: string
+          enum: [DTCC, EFT, ACH, CHECK, WIRE]
+      required:
+        - disbursementType
+
+    PayeeOrBeneficiaryRequest:
+      type: object
+      description: |
+        The payeeOrBeneficiary object represents how the withdrawal proceeds are distributed and to whom. It includes payment form, allocation rules for each payee.
+      properties:
+        paymentForm:
+          type: string
+          enum: [DTCC, ACH, CHECK, WIRE, EXCHANGE]
+        allocationPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+        party:
+          anyOf:
+            - $ref: '#/components/schemas/IndividualIdentity'
+            - $ref: '#/components/schemas/EntityIdentity'
+        bank:
+          $ref: '#/components/schemas/Bank'
+        address:
+          $ref: '#/components/schemas/Address'
+
+    PartyRequest:
+      description: |
+        The parties object represents the policy parties relevant to the withdrawal (owners, annuitants, beneficiaries, etc.), along with their identity, relationship, and payout instructions.
+      type: object
+      anyOf:
+        - $ref: '#/components/schemas/IndividualParty'
+        - $ref: '#/components/schemas/EntityParty'
+      properties:
+        paymentForm:
+          type: string
+          enum: [DTCC, ACH, CHECK, WIRE, EXCHANGE]
+        allocationPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+        bank:
+          $ref: '#/components/schemas/Bank'
+        address:
+          $ref: '#/components/schemas/Address'
+      required:
+        - paymentForm
+        - allocationPercentage
+
+    Producer:
+      type: object
+      description: Information about the producer submitting the request
+      properties:
+        producerNumber:
+          type: string
+          maxLength: 100
+        npn:
+          type: string
+          maxLength: 100
+        crdNumber:
+          type: string
+          maxLength: 100
+
+    FundDistribution:
+      type: object
+      description: Fund distribution details for the withdrawal
+      properties:
+        fundId:
+          type: string
+          maxLength: 100
+        fundName:
+          type: string
+          maxLength: 100
+        totalFundValue:
+          type: [number, 'null']
+          minimum: 0
+          maximum: 9999999999.99
+        requestedAmount:
+          type: [number, 'null']
+          minimum: 0
+          maximum: 9999999999.99
+        requestedPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+      oneOf:
+        - required: [requestedAmount]
+          not:
+            required: [requestedPercentage]
+        - required: [requestedPercentage]
+          not:
+            required: [requestedAmount]
+
+    Charges:
+      type: object
+      description: Details of fees and deductions requested to be applied
+      properties:
+        chargeType:
+          type: string
+          enum: [COSTOFINSURANCE, EXPENSECHARGE, UNITEXPENSECHARGE, RIDERCHARGE, SURRENDERCHARGE, WITHDRAWALCHARGE]
+        isChargeWaived:
+          type: boolean
+        chargeWaiverReason:
+          type: string
+          maxLength: 100
+
+    Address:
+      type: object
+      properties:
+        addressId:
+          type: string
+          maxLength: 100
+        addressType:
+          type: string
+          enum: [RESIDENCE, BUSINESS, POBOXSEASONAL, APO, DPO, FPO]
+          maxLength: 30
+        addressLine1:
+          type: string
+          maxLength: 100
+        addressLine2:
+          type: string
+          maxLength: 100
+        addressLine3:
+          type: string
+          maxLength: 100
+        addressLine4:
+          type: string
+          maxLength: 100
+        addressLine5:
+          type: string
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        state:
+          type: string
+          maxLength: 2
+          pattern: '^[A-Z]{2}$'
+        zipCode:
+          type: string
+          maxLength: 10
+          pattern: '^[0-9A-Za-z -]{3,10}$'
+        zipCodeExtension:
+          type: string
+          maxLength: 4
+          pattern: '^[0-9A-Za-z]{1,4}$'
+        country:
+          type: string
+          maxLength: 2
+          pattern: '^[A-Z]{2}$'
+      required:
+        - addressType
+        - addressLine1
+        - city
+        - state
+        - zipCode
+
+    Bank:
+      type: object
+      properties:
+        bankId:
+          type: string
+          maxLength: 100
+        nameOnAccount:
+          type: string
+          maxLength: 100
+        accountStatus:
+          type: string
+          enum: [ACTIVEBANKACCOUNT, TERMINATEDBANKACCOUNT]
+        accountType:
+          type: string
+          enum: [CHECKING, SAVINGS, CREDITCARDACCOUNT, DEBITCARDACCOUNT, BROKERAGEACCOUNT, CERTIFICATEOFDEPOSITACCOUNT]
+        accountNumber:
+          type: string
+          maxLength: 17
+          pattern: '^\d{4,17}$'
+        routingNumber:
+          type: string
+          maxLength: 9
+          pattern: '^\d{9}$'
+        branchName:
+          type: string
+          maxLength: 100
+      required:
+        - nameOnAccount
+        - accountType
+        - accountNumber
+        - routingNumber
+
+    TaxWithholdingInstruction:
+      type: object
+      description: List of tax withholding instruction entries
+      properties:
+        party:
+          anyOf:
+            - $ref: '#/components/schemas/IndividualIdentity'
+            - $ref: '#/components/schemas/EntityIdentity'
+        taxWithholdingType:
+          type: string
+          enum: [FEDERAL, STATE, NRA, BACKUP]
+        taxRateToUse:
+          type: string
+          enum: [NOWITHHOLDINGELECTED, USEVALUESENTERED, NOWITHHOLDINGALLOWED, USEDEFAULTTABLE]
+        filingStatus:
+          type: string
+          enum: [SINGLE, DOMESTICPARTNERSHIP, DEFAULT, MARRIED, HEADOFHOUSEHOLD, WIDOWED, DIVORCED]
+        dollar:
+          type: number
+          description: Fixed dollar amount to withhold
+          minimum: 0
+          maximum: 9999999999.99
+        percentage:
+          type: number
+          description: Percentage amount to withhold
+          minimum: 0
+          maximum: 100
+        exemptions:
+          type: integer
+          minimum: 0
+          maximum: 99
+        taxJurisdiction:
+          type: string
+          maxLength: 50
+      required:
+        - taxWithholdingType
+        - taxRateToUse
+      oneOf:
+        - description: Use a fixed dollar amount for withholding.
+          required: [dollar]
+        - description: Use a percentage for withholding.
+          required: [percentage]
+      allOf:
+        - if:
+            properties:
+              taxWithholdingType:
+                const: STATE
+          then:
+            required:
+              - taxJurisdiction
+
+    FullSurrenderQuoteResponse:
+      type: object
+      required: [status, policyNumber, effectiveDate, transactionAmounts]
+      properties:
+        status:
+          type: string
+          enum: [SUCCESS, FAILURE]
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorItem'
+        policyNumber:
+          type: string
+          minLength: 1
+          maxLength: 30
+        effectiveDate:
+          type: string
+          format: date
+        cusip:
+          type: string
+          minLength: 9
+          maxLength: 9
+          pattern: '^[0-9]{3}[A-Z0-9]{5}[0-9]$'
+          description: unique identification code. Optional; REQUIRED only when policyNumber is not globally unique.
+        freeWithdrawalAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        remainingFreeWithdrawalAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        tenPercentOfPurchasePayments:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        freeAmountGain:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        freeAmountPremium:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        transactionAmounts:
+          $ref: '#/components/schemas/TransactionAmountsFullSurrender'
+        charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Charge'
+        taxWithheldAmounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxWithheldAmount'
+        payeeOrBeneficiary:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayeeOrBeneficiary'
+        parties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        taxQualification:
+          $ref: '#/components/schemas/TaxQualification'
+      allOf:
+        - if:
+            properties:
+              status:
+                const: SUCCESS
+          then:
+            not:
+              required: [errors]
+        - if:
+            properties:
+              status:
+                const: FAILURE
+          then:
+            required: [errors]
+            properties:
+              errors:
+                type: array
+                minItems: 1
+                items:
+                  $ref: '#/components/schemas/ErrorItem'
+
+    PartialsWithdrawalQuoteResponse:
+      type: object
+      required: [status, policyNumber, effectiveDate, transactionAmounts]
+      properties:
+        status:
+          type: string
+          enum: [SUCCESS, FAILURE]
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorItem'
+        policyNumber:
+          type: string
+          minLength: 1
+          maxLength: 30
+        effectiveDate:
+          type: string
+          format: date
+        cusip:
+          type: string
+          minLength: 9
+          maxLength: 9
+          pattern: '^[0-9]{3}[A-Z0-9]{5}[0-9]$'
+          description: unique identification code. Optional; REQUIRED only when policyNumber is not globally unique.
+        freeWithdrawalAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        remainingFreeWithdrawalAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        tenPercentOfPurchasePayments:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        freeAmountGain:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        freeAmountPremium:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        transactionAmounts:
+          $ref: '#/components/schemas/TransactionAmountsPartials'
+        charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Charge'
+        taxWithheldAmounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxWithheldAmount'
+        payeeOrBeneficiary:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayeeOrBeneficiary'
+        parties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        taxQualification:
+          $ref: '#/components/schemas/TaxQualification'
+        rmdInfo:
+          $ref: '#/components/schemas/RmdInfo'
+      allOf:
+        - if:
+            properties:
+              status:
+                const: SUCCESS
+          then:
+            not:
+              required: [errors]
+        - if:
+            properties:
+              status:
+                const: FAILURE
+          then:
+            required: [errors]
+            properties:
+              errors:
+                type: array
+                minItems: 1
+                items:
+                  $ref: '#/components/schemas/ErrorItem'
+
+    TransactionAmountsFullSurrender:
+      type: object
+      required: [appliedAmount, totalChargeAmount, totalTaxWithheldAmount, netPaymentAmount, disbursementType, disbursementPaymentForm]
+      properties:
+        appliedAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        taxableAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        totalChargeAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        totalTaxWithheldAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        netPaymentAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        disbursementType:
+          type: string
+          enum: [GROSS, NET]
+        disbursementPaymentForm:
+          type: string
+          enum: [DTCC, ACH, CHECK, WIRE]
+        grossPaymentAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        cashSurrenderValue:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        accumulatedCashValue:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        grossCashValueAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+
+    TransactionAmountsPartials:
+      type: object
+      required: [amountType]
+      properties:
+        amountType:
+          type: string
+          enum: [AMOUNT, PERCENTAGE, MAX, FREEWITHDRAWALAMOUNT, WITHDRAWALUNTILBASIS, EARNINGSONLY]
+        requestedAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        requestedPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+      allOf:
+          - $ref: '#/components/schemas/TransactionAmountsFullSurrender'
+          - if:
+              properties:
+                amountType:
+                  const: AMOUNT
+              required:
+                - amountType
+            then:
+              required:
+                - requestedAmount
+              not:
+                required:
+                  - requestedPercentage
+          - if:
+              properties:
+                amountType:
+                  const: PERCENTAGE
+              required:
+                - amountType
+            then:
+              required:
+                - requestedPercentage
+              not:
+                required:
+                  - requestedAmount
+          - if:
+            properties:
+              amountType:
+                enum: [MAX, FREEWITHDRAWALAMOUNT, WITHDRAWALUNTILBASIS, EARNINGSONLY]
+            then:
+              required: [amountType]
+              not:
+                anyOf:
+                  - required: [requestedAmount]
+                  - required: [requestedPercentage]
+
+    Charge:
+      type: object
+      required: [chargeType, chargeAmount, chargeCategory]
+      properties:
+        chargeType:
+          type: string
+          description: Carrier-defined or product-defined charge label (e.g., SURRENDERCHARGE, ADMINISTRATIVE, LOANPAYOFF).
+          maxLength: 50
+        chargeAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        chargeCategory:
+          type: string
+          enum: [FEE, TAX, LOAN_DEDUCTION, ADJUSTMENT]
+        isChargeWaived:
+          type: boolean
+        chargeWaiverReason:
+          type: string
+          maxLength: 100
+        isMvaApplied:
+          type: boolean
+        loanDeduction:
+          $ref: '#/components/schemas/LoanDeduction'
+      allOf:
+        - if:
+            properties:
+              chargeCategory:
+                const: LOAN_DEDUCTION
+            required: [chargeCategory]
+          then:
+            required: [loanDeduction]
+          else:
+            not:
+              required: [loanDeduction]
+
+    LoanDeduction:
+      type: object
+      description: Loan-related deductions that reduce the net disbursement.
+      properties:
+        loanType:
+          type: string
+          enum: [POLICY_LOAN, AUTOMATIC_PREMIUM_LOAN, LOAN_REPAYMENT, LOAN_INTEREST, PREFERRED, OTHER]
+        loanInterestType:
+          type: string
+          enum: [FIXED, VARIABLE, INDEXED, OTHER]
+        loanPrincipalDeductedAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        loanInterestDeductedAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        loanPayoffIndicator:
+          type: boolean
+
+    TaxWithheldAmount:
+      type: object
+      required: [taxWithholdingType, withholdAmount, taxId]
+      properties:
+        taxId:
+          type: string
+          maxLength: 9
+        taxWithholdingType:
+          type: string
+          enum: [FEDERAL, STATE, NRA, BACKUP]
+        withholdAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        withheldTaxableAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+
+    PayeeOrBeneficiary:
+      type: object
+      description: |
+        The payeeOrBeneficiary object represents how the withdrawal proceeds are distributed and to whom. It includes payment form, allocation rules for each payee.
+      required: [paymentForm, allocationPercentage, disbursementAmount, taxId]
+      properties:
+        taxId:
+          type: string
+          maxLength: 9
+        paymentForm:
+          type: string
+          enum: [DTCC, CREDITCARD, ACH, CHECK, WIRE, EXCHANGE]
+        allocationPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+        disbursementAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+
+    TaxQualification:
+      type: object
+      description: TEFRA/TEMRA and related tax qualification fields returned with the quote.
+      properties:
+        isTefraApplicable:
+          type: boolean
+        isTemraApplicable:
+          type: boolean
+        tefraValue:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        temraValue:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        isirc72qPenaltyApplied:
+          type: boolean
+        taxablePortionRule:
+          type: string
+          enum: [LIFO, FIFO]
+
+    Party:
+      description: |
+        The parties object represents the policy parties relevant to the withdrawal (owners, annuitants, beneficiaries, etc.), along with their identity, relationship, and payout instructions.
+      type: object
+      anyOf:
+        - $ref: '#/components/schemas/IndividualParty'
+        - $ref: '#/components/schemas/EntityParty'
+      properties:
+        paymentForm:
+          type: string
+          enum: [DTCC, CREDITCARD, ACH, CHECK, WIRE, EXCHANGE]
+        allocationPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+      required:
+        - paymentForm
+        - allocationPercentage
+
+    IndividualParty:
+      description: Schema for individual party data
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/IndividualIdentity'
+        - $ref: '#/components/schemas/PartyRelationship'
+
+    EntityParty:
+      description: Schema for entity party data
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/EntityIdentity'
+        - $ref: '#/components/schemas/PartyRelationship'
+
+    IndividualIdentity:
+      description: Schema for individual identity data
+      required: [firstName, lastName, taxId]
+      type: object
+      properties:
+        type:
+          type: string
+          const: individual
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 105
+          pattern: '^[a-zA-Z0-9=()*@#\s.,''_/~%$!();:&"®`\\?\-]{1,105}$'
+        middleName:
+          type: string
+          minLength: 1
+          maxLength: 105
+          pattern: '^[a-zA-Z0-9=()*@#\s.,''_/~%$!();:&"®`\\?\-]{1,105}$'
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 105
+          pattern: '^[a-zA-Z0-9=()*@#\s.,''_/~%$!();:&"®`\\?\-]{1,105}$'
+        taxId:
+          type: string
+          maxLength: 9
+
+    PartyRelationship:
+      description: Schema for party relationship data
+      type: object
+      required: [relationships]
+      properties:
+        relationships:
+          type: array
+          minItems: 1
+          maxItems: 2
+          items:
+            type: string
+            enum: [owner, jointOwner, annuitant, jointAnnuitant, primaryBeneficiary, contingentBeneficiary]
+
+    EntityIdentity:
+      description: Schema for entity identity data
+      type: object
+      required: [type, name, taxId]
+      properties:
+        type:
+          type: string
+          const: entity
+        name:
+          type: string
+          minLength: 1
+          maxLength: 180
+          pattern: '^[\w=()*@#\s.,''\/~%$!;:&"®`\\?\-]{1,180}$'
+        taxId:
+          type: string
+          maxLength: 9
+
+    RmdInfo:
+      type: object
+      description: RMD details specific to partial one-time withdrawals
+      properties:
+        rmdTaxYear:
+          type: integer
+          minimum: 1900
+          maximum: 2100
+        rmdAgeAtDistribution:
+          type: integer
+          minimum: 0
+          maximum: 150
+        rmdSpouseDoB:
+          type: string
+          format: date
+        rmdRequestedAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        rmdCalculationMethod:
+          type: string
+          enum: [UNIFORM_LIFETIME_TABLE, JOINT_LIFE, SINGLE_LIFE, OTHER]
+        rmdPriorYearEndValue:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        calculatedAnnualRmdAmount:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        remainingRmdAmountAfterThisQuote:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        rmdWithdrawalAmountThisYear:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+        totalRMDAmountRemaining:
+          type: number
+          minimum: 0
+          maximum: 9999999999.99
+      required: [rmdTaxYear, rmdRequestedAmount, rmdCalculationMethod]
+
+    ErrorItem:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        error:
+          type: string
+        errorDescription:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        httpStatus:
+          type: integer
+          description: HTTP status code associated with this error
+          minimum: 400
+          maximum: 599
+        code:
+          type: string
+          description: >
+            A structured error code that uniquely identifies the type of error. This can follow a hierarchical format:
+            - `<domain>`: The logical domain (e.g., "gateway")
+            - `<category>`: The error category (e.g., "client" or "server")
+            - `<subcategory>`: A specific error identifier (e.g., "badrequest", "timeout")
+        timestamp:
+          type: string
+          format: date-time
+          description: Time when the error occurred
+        message:
+          type: string
+          description: Technical message with specific error details for developers identify the type of error quickly.
+        userMessage:
+          type: string
+          description: End-user readable message to describe the error in simple terms.
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Name of the field on which error has occurred
+              location:
+                type: string
+                description: The specific location where the error occured.
+              reason:
+                type: string
+                description: Details about why the error occurred
+        businessErrors:
+          type: array
+          description: Logical business rule violations or decision failures related to business logic or rules
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Code to classify the business error & Identifies the type of business rule or decision failure.
+              message:
+                type: string
+                description: Why the business error occurred / Specific business rule violation
+            required: [code, message]
