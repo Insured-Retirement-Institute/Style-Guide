@@ -23,7 +23,8 @@
             <option value="policyincome.yaml">Policy Income API</option>
             <option value="onetimewithdrawal1.yaml">One-Time Withdrawals API</option>
             <option value="onetimewithdrawalquote1.yaml">One-Time Withdrawal Quote API</option>
-            <option value="systematicprogram1.yaml">Systematic Program API</option>
+            <option value="systematicwithdrawalprogramsetup.yaml">Systematic Withdrawal Program Setup API</option>
+            <option value="systematicwithdrawalprogramupdate.yaml">Systematic Withdrawal Program Update API</option>
             <!-- Add more options as you add more APIs -->
             <!-- <option value="another-api/openapi.yaml">Another API</option> -->
           </select>
@@ -97,11 +98,20 @@
           }
         }
       },
-      "systematicprogram1.yaml": {
-        name: "Systematic Program API",
+      "systematicwithdrawalprogramsetup.yaml": {
+        name: "Systematic Withdrawal Program Setup API",
         versions: {
           "v1": {
-            path: "systematicprogram1.yaml",
+            path: "systematicwithdrawalprogramsetup.yaml",
+            displayName: "v1.0.0"
+          }
+        }
+      },
+      "systematicwithdrawalprogramupdate.yaml": {
+        name: "Systematic Withdrawal Program Update API",
+        versions: {
+          "v1": {
+            path: "systematicwithdrawalprogramupdate.yaml",
             displayName: "v1.0.0"
           }
         }
