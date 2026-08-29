@@ -7,6 +7,7 @@ This document explains how to manage multiple API documentation pages using GitH
 - [Directory Structure](#directory-structure)
 - [How the Site Works](#how-the-site-works)
 - [Adding New API Documentation](#adding-new-api-documentation)
+- [Shared components and bundling](#shared-components-and-bundling)
 - [Adding Versioned API Documentation](#adding-versioned-api-documentation)
 - [Validating Specifications](#validating-specifications)
 - [Publishing to GitHub Pages](#publishing-to-github-pages)
@@ -29,9 +30,11 @@ docs/
 ├── css/
 │   └── custom.css       # Custom styling
 ├── specs/
-│   ├── appstatusv1.yaml
+│   ├── shared/          # Reusable OpenAPI component fragments ($ref targets)
+│   ├── src/             # Modular source specs (edit these when using shared components)
+│   ├── appstatusv1.yaml # Published specs (Swagger UI loads these paths)
 │   ├── appstatusv2.yaml
-│   └── ...              # All OpenAPI specification files
+│   └── ...              # Bundled or standalone OpenAPI files
 └── favicon.png          # Site favicon
 ```
 
@@ -150,9 +153,10 @@ CI runs these on Node.js 20; any recent Node version works locally. Install depe
 
 ```bash
 npm ci
+npm run bundle:specs
 ```
 
-Validate every spec in `docs/specs/` against the OpenAPI 3.1 schema:
+Validate modular sources in `docs/specs/src/` and published specs in `docs/specs/` against the OpenAPI 3.1 schema:
 
 ```bash
 npm run validate:specs
@@ -174,8 +178,8 @@ The **PR Checks** workflow reports two independent checks on every pull request 
 
 | Check | What it does |
 |-------|--------------|
-| `Validate OpenAPI specs` | Runs `npm run validate:specs`. |
-| `Build data dictionary` | Runs `npm run build:dictionary`, then packages `docs/` exactly as the publish workflow does. Attaches the built site to the workflow run as a downloadable `data-dictionary-preview` artifact, so you can inspect the generated dictionary before approving the merge. |
+| `Validate OpenAPI specs` | Runs `npm run bundle:specs`, then `npm run validate:specs`. |
+| `Build data dictionary` | Runs `npm run bundle:specs`, then `npm run build:dictionary`, then packages `docs/` exactly as the publish workflow does. Attaches the built site to the workflow run as a downloadable `data-dictionary-preview` artifact, so you can inspect the generated dictionary before approving the merge. |
 
 The build check shares its Node setup and build command with the publish workflow, so a passing build on the pull request means the same build will behave identically when merged to `main`. Schema validation runs only on pull requests — it is intended to gate merges, not to block publication of specs that are already approved.
 
